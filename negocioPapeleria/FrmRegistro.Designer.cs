@@ -34,24 +34,29 @@
             this.lblMensajeIndicativo = new System.Windows.Forms.Label();
             this.dgvMostrarDatos = new System.Windows.Forms.DataGridView();
             this.pnlDatosProductos = new System.Windows.Forms.Panel();
-            this.pnlDatosEmpleados = new System.Windows.Forms.Panel();
             this.pnlDatosClientes = new System.Windows.Forms.Panel();
             this.txtDireccionCliente = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtApellidoCliente = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnRegistrarClientesGuayaquil = new System.Windows.Forms.Button();
             this.txtNombreCliente = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtTelefonoCLiente = new System.Windows.Forms.TextBox();
             this.btnEliminarClientes = new System.Windows.Forms.Button();
             this.btnEditarClientes = new System.Windows.Forms.Button();
-            this.btnRegistarClientesQuito = new System.Windows.Forms.Button();
+            this.btnRegistarClientes = new System.Windows.Forms.Button();
             this.cmbSucursalCliente = new System.Windows.Forms.ComboBox();
+            this.txtNombreProducto = new System.Windows.Forms.TextBox();
+            this.lblIngresoNombre = new System.Windows.Forms.Label();
+            this.lblPrecio = new System.Windows.Forms.Label();
+            this.txtPrecioProducto = new System.Windows.Forms.TextBox();
+            this.btnEliminarProductos = new System.Windows.Forms.Button();
+            this.btnEditarProductos = new System.Windows.Forms.Button();
+            this.btnRegistrarProductos = new System.Windows.Forms.Button();
+            this.pnlDatosEmpleados = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnRegistrarEmpleadosGuayaquil = new System.Windows.Forms.Button();
             this.txtNombreEmpleado = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -60,18 +65,16 @@
             this.btnEditarEmpleados = new System.Windows.Forms.Button();
             this.btnRegistrarEmpleadosQuito = new System.Windows.Forms.Button();
             this.cmbSucursalEmpleado = new System.Windows.Forms.ComboBox();
-            this.btnRegistrarProductosGuayaquil = new System.Windows.Forms.Button();
-            this.txtNombreProducto = new System.Windows.Forms.TextBox();
-            this.lblIngresoNombre = new System.Windows.Forms.Label();
-            this.lblPrecio = new System.Windows.Forms.Label();
-            this.txtPrecioProducto = new System.Windows.Forms.TextBox();
-            this.btnEliminarProductos = new System.Windows.Forms.Button();
-            this.btnEditarProductos = new System.Windows.Forms.Button();
-            this.btnRegistrarProductosQuito = new System.Windows.Forms.Button();
+            this.txtIDEmpleado = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtIDCliente = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtIDProducto = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMostrarDatos)).BeginInit();
             this.pnlDatosProductos.SuspendLayout();
-            this.pnlDatosEmpleados.SuspendLayout();
             this.pnlDatosClientes.SuspendLayout();
+            this.pnlDatosEmpleados.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnProductos
@@ -154,56 +157,39 @@
             // 
             // pnlDatosProductos
             // 
-            this.pnlDatosProductos.Controls.Add(this.btnRegistrarProductosGuayaquil);
+            this.pnlDatosProductos.Controls.Add(this.txtIDProducto);
+            this.pnlDatosProductos.Controls.Add(this.label11);
             this.pnlDatosProductos.Controls.Add(this.txtNombreProducto);
             this.pnlDatosProductos.Controls.Add(this.lblIngresoNombre);
             this.pnlDatosProductos.Controls.Add(this.lblPrecio);
             this.pnlDatosProductos.Controls.Add(this.txtPrecioProducto);
             this.pnlDatosProductos.Controls.Add(this.btnEliminarProductos);
             this.pnlDatosProductos.Controls.Add(this.btnEditarProductos);
-            this.pnlDatosProductos.Controls.Add(this.btnRegistrarProductosQuito);
+            this.pnlDatosProductos.Controls.Add(this.btnRegistrarProductos);
             this.pnlDatosProductos.Location = new System.Drawing.Point(26, 63);
             this.pnlDatosProductos.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDatosProductos.Name = "pnlDatosProductos";
             this.pnlDatosProductos.Size = new System.Drawing.Size(1047, 279);
             this.pnlDatosProductos.TabIndex = 9;
             // 
-            // pnlDatosEmpleados
-            // 
-            this.pnlDatosEmpleados.Controls.Add(this.pnlDatosClientes);
-            this.pnlDatosEmpleados.Controls.Add(this.label3);
-            this.pnlDatosEmpleados.Controls.Add(this.btnRegistrarEmpleadosGuayaquil);
-            this.pnlDatosEmpleados.Controls.Add(this.txtNombreEmpleado);
-            this.pnlDatosEmpleados.Controls.Add(this.label1);
-            this.pnlDatosEmpleados.Controls.Add(this.label2);
-            this.pnlDatosEmpleados.Controls.Add(this.txtTelefonoEmpleado);
-            this.pnlDatosEmpleados.Controls.Add(this.btnEliminarEmpleados);
-            this.pnlDatosEmpleados.Controls.Add(this.btnEditarEmpleados);
-            this.pnlDatosEmpleados.Controls.Add(this.btnRegistrarEmpleadosQuito);
-            this.pnlDatosEmpleados.Controls.Add(this.cmbSucursalEmpleado);
-            this.pnlDatosEmpleados.Location = new System.Drawing.Point(26, 63);
-            this.pnlDatosEmpleados.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlDatosEmpleados.Name = "pnlDatosEmpleados";
-            this.pnlDatosEmpleados.Size = new System.Drawing.Size(1047, 279);
-            this.pnlDatosEmpleados.TabIndex = 15;
-            // 
             // pnlDatosClientes
             // 
+            this.pnlDatosClientes.Controls.Add(this.txtIDCliente);
+            this.pnlDatosClientes.Controls.Add(this.label10);
             this.pnlDatosClientes.Controls.Add(this.txtDireccionCliente);
             this.pnlDatosClientes.Controls.Add(this.label8);
             this.pnlDatosClientes.Controls.Add(this.txtApellidoCliente);
             this.pnlDatosClientes.Controls.Add(this.label7);
             this.pnlDatosClientes.Controls.Add(this.label4);
-            this.pnlDatosClientes.Controls.Add(this.btnRegistrarClientesGuayaquil);
             this.pnlDatosClientes.Controls.Add(this.txtNombreCliente);
             this.pnlDatosClientes.Controls.Add(this.label5);
             this.pnlDatosClientes.Controls.Add(this.label6);
             this.pnlDatosClientes.Controls.Add(this.txtTelefonoCLiente);
             this.pnlDatosClientes.Controls.Add(this.btnEliminarClientes);
             this.pnlDatosClientes.Controls.Add(this.btnEditarClientes);
-            this.pnlDatosClientes.Controls.Add(this.btnRegistarClientesQuito);
+            this.pnlDatosClientes.Controls.Add(this.btnRegistarClientes);
             this.pnlDatosClientes.Controls.Add(this.cmbSucursalCliente);
-            this.pnlDatosClientes.Location = new System.Drawing.Point(0, 0);
+            this.pnlDatosClientes.Location = new System.Drawing.Point(26, 63);
             this.pnlDatosClientes.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDatosClientes.Name = "pnlDatosClientes";
             this.pnlDatosClientes.Size = new System.Drawing.Size(1047, 279);
@@ -213,7 +199,7 @@
             // 
             this.txtDireccionCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDireccionCliente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDireccionCliente.Location = new System.Drawing.Point(215, 124);
+            this.txtDireccionCliente.Location = new System.Drawing.Point(215, 143);
             this.txtDireccionCliente.Name = "txtDireccionCliente";
             this.txtDireccionCliente.Size = new System.Drawing.Size(368, 27);
             this.txtDireccionCliente.TabIndex = 19;
@@ -222,7 +208,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(12, 131);
+            this.label8.Location = new System.Drawing.Point(12, 145);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(158, 20);
             this.label8.TabIndex = 18;
@@ -232,7 +218,7 @@
             // 
             this.txtApellidoCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtApellidoCliente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtApellidoCliente.Location = new System.Drawing.Point(215, 85);
+            this.txtApellidoCliente.Location = new System.Drawing.Point(215, 104);
             this.txtApellidoCliente.Name = "txtApellidoCliente";
             this.txtApellidoCliente.Size = new System.Drawing.Size(368, 27);
             this.txtApellidoCliente.TabIndex = 17;
@@ -241,7 +227,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(12, 92);
+            this.label7.Location = new System.Drawing.Point(12, 106);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(149, 20);
             this.label7.TabIndex = 16;
@@ -251,33 +237,17 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(12, 217);
+            this.label4.Location = new System.Drawing.Point(12, 231);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(70, 20);
             this.label4.TabIndex = 15;
             this.label4.Text = "Sucursal";
             // 
-            // btnRegistrarClientesGuayaquil
-            // 
-            this.btnRegistrarClientesGuayaquil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnRegistrarClientesGuayaquil.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistrarClientesGuayaquil.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarClientesGuayaquil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistrarClientesGuayaquil.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarClientesGuayaquil.Location = new System.Drawing.Point(612, 117);
-            this.btnRegistrarClientesGuayaquil.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRegistrarClientesGuayaquil.Name = "btnRegistrarClientesGuayaquil";
-            this.btnRegistrarClientesGuayaquil.Size = new System.Drawing.Size(399, 45);
-            this.btnRegistrarClientesGuayaquil.TabIndex = 14;
-            this.btnRegistrarClientesGuayaquil.Text = "Registrar Clientes Guayaquil";
-            this.btnRegistrarClientesGuayaquil.UseVisualStyleBackColor = false;
-            this.btnRegistrarClientesGuayaquil.Click += new System.EventHandler(this.btnRegistrarClientesGuayaquil_Click);
-            // 
             // txtNombreCliente
             // 
             this.txtNombreCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNombreCliente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombreCliente.Location = new System.Drawing.Point(215, 45);
+            this.txtNombreCliente.Location = new System.Drawing.Point(215, 64);
             this.txtNombreCliente.Name = "txtNombreCliente";
             this.txtNombreCliente.Size = new System.Drawing.Size(368, 27);
             this.txtNombreCliente.TabIndex = 11;
@@ -286,7 +256,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(12, 52);
+            this.label5.Location = new System.Drawing.Point(12, 66);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(147, 20);
             this.label5.TabIndex = 10;
@@ -296,7 +266,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(12, 178);
+            this.label6.Location = new System.Drawing.Point(12, 192);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(152, 20);
             this.label6.TabIndex = 12;
@@ -306,7 +276,7 @@
             // 
             this.txtTelefonoCLiente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTelefonoCLiente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTelefonoCLiente.Location = new System.Drawing.Point(215, 171);
+            this.txtTelefonoCLiente.Location = new System.Drawing.Point(215, 190);
             this.txtTelefonoCLiente.Name = "txtTelefonoCLiente";
             this.txtTelefonoCLiente.Size = new System.Drawing.Size(368, 27);
             this.txtTelefonoCLiente.TabIndex = 13;
@@ -319,7 +289,7 @@
             this.btnEliminarClientes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminarClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarClientes.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarClientes.Location = new System.Drawing.Point(830, 182);
+            this.btnEliminarClientes.Location = new System.Drawing.Point(830, 155);
             this.btnEliminarClientes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEliminarClientes.Name = "btnEliminarClientes";
             this.btnEliminarClientes.Size = new System.Drawing.Size(181, 45);
@@ -335,7 +305,7 @@
             this.btnEditarClientes.FlatAppearance.BorderSize = 0;
             this.btnEditarClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditarClientes.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditarClientes.Location = new System.Drawing.Point(612, 182);
+            this.btnEditarClientes.Location = new System.Drawing.Point(612, 155);
             this.btnEditarClientes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditarClientes.Name = "btnEditarClientes";
             this.btnEditarClientes.Size = new System.Drawing.Size(181, 45);
@@ -344,174 +314,36 @@
             this.btnEditarClientes.UseVisualStyleBackColor = false;
             this.btnEditarClientes.Click += new System.EventHandler(this.btnEditarClientes_Click);
             // 
-            // btnRegistarClientesQuito
+            // btnRegistarClientes
             // 
-            this.btnRegistarClientesQuito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnRegistarClientesQuito.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistarClientesQuito.FlatAppearance.BorderSize = 0;
-            this.btnRegistarClientesQuito.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistarClientesQuito.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistarClientesQuito.Location = new System.Drawing.Point(612, 53);
-            this.btnRegistarClientesQuito.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRegistarClientesQuito.Name = "btnRegistarClientesQuito";
-            this.btnRegistarClientesQuito.Size = new System.Drawing.Size(399, 45);
-            this.btnRegistarClientesQuito.TabIndex = 6;
-            this.btnRegistarClientesQuito.Text = "Registrar Clientes Quito";
-            this.btnRegistarClientesQuito.UseVisualStyleBackColor = false;
-            this.btnRegistarClientesQuito.Click += new System.EventHandler(this.btnRegistrarClientesQuito_Click);
+            this.btnRegistarClientes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
+            this.btnRegistarClientes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegistarClientes.FlatAppearance.BorderSize = 0;
+            this.btnRegistarClientes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistarClientes.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistarClientes.Location = new System.Drawing.Point(612, 75);
+            this.btnRegistarClientes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnRegistarClientes.Name = "btnRegistarClientes";
+            this.btnRegistarClientes.Size = new System.Drawing.Size(399, 45);
+            this.btnRegistarClientes.TabIndex = 6;
+            this.btnRegistarClientes.Text = "Registrar Clientes";
+            this.btnRegistarClientes.UseVisualStyleBackColor = false;
+            this.btnRegistarClientes.Click += new System.EventHandler(this.btnRegistrarClientes_Click);
             // 
             // cmbSucursalCliente
             // 
             this.cmbSucursalCliente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbSucursalCliente.FormattingEnabled = true;
-            this.cmbSucursalCliente.Location = new System.Drawing.Point(215, 214);
+            this.cmbSucursalCliente.Location = new System.Drawing.Point(215, 233);
             this.cmbSucursalCliente.Name = "cmbSucursalCliente";
             this.cmbSucursalCliente.Size = new System.Drawing.Size(368, 28);
             this.cmbSucursalCliente.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 191);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 20);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Sucursal";
-            // 
-            // btnRegistrarEmpleadosGuayaquil
-            // 
-            this.btnRegistrarEmpleadosGuayaquil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnRegistrarEmpleadosGuayaquil.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistrarEmpleadosGuayaquil.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarEmpleadosGuayaquil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistrarEmpleadosGuayaquil.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarEmpleadosGuayaquil.Location = new System.Drawing.Point(612, 109);
-            this.btnRegistrarEmpleadosGuayaquil.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRegistrarEmpleadosGuayaquil.Name = "btnRegistrarEmpleadosGuayaquil";
-            this.btnRegistrarEmpleadosGuayaquil.Size = new System.Drawing.Size(399, 45);
-            this.btnRegistrarEmpleadosGuayaquil.TabIndex = 14;
-            this.btnRegistrarEmpleadosGuayaquil.Text = "Registrar Empleados Guayaquil";
-            this.btnRegistrarEmpleadosGuayaquil.UseVisualStyleBackColor = false;
-            this.btnRegistrarEmpleadosGuayaquil.Click += new System.EventHandler(this.btnRegistrarEmpleadosGuayaquil_Click);
-            // 
-            // txtNombreEmpleado
-            // 
-            this.txtNombreEmpleado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNombreEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombreEmpleado.Location = new System.Drawing.Point(215, 63);
-            this.txtNombreEmpleado.Name = "txtNombreEmpleado";
-            this.txtNombreEmpleado.Size = new System.Drawing.Size(368, 27);
-            this.txtNombreEmpleado.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 75);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(168, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Nombre del empleado";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 135);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(152, 20);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Número de teléfono";
-            // 
-            // txtTelefonoEmpleado
-            // 
-            this.txtTelefonoEmpleado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTelefonoEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTelefonoEmpleado.Location = new System.Drawing.Point(215, 123);
-            this.txtTelefonoEmpleado.Name = "txtTelefonoEmpleado";
-            this.txtTelefonoEmpleado.Size = new System.Drawing.Size(368, 27);
-            this.txtTelefonoEmpleado.TabIndex = 13;
-            // 
-            // btnEliminarEmpleados
-            // 
-            this.btnEliminarEmpleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnEliminarEmpleados.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEliminarEmpleados.FlatAppearance.BorderSize = 0;
-            this.btnEliminarEmpleados.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnEliminarEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEliminarEmpleados.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarEmpleados.Location = new System.Drawing.Point(830, 174);
-            this.btnEliminarEmpleados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnEliminarEmpleados.Name = "btnEliminarEmpleados";
-            this.btnEliminarEmpleados.Size = new System.Drawing.Size(181, 45);
-            this.btnEliminarEmpleados.TabIndex = 9;
-            this.btnEliminarEmpleados.Text = "Eliminar Empleados";
-            this.btnEliminarEmpleados.UseVisualStyleBackColor = false;
-            this.btnEliminarEmpleados.Click += new System.EventHandler(this.btnEliminarEmpleados_Click);
-            // 
-            // btnEditarEmpleados
-            // 
-            this.btnEditarEmpleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnEditarEmpleados.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnEditarEmpleados.FlatAppearance.BorderSize = 0;
-            this.btnEditarEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEditarEmpleados.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditarEmpleados.Location = new System.Drawing.Point(612, 174);
-            this.btnEditarEmpleados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnEditarEmpleados.Name = "btnEditarEmpleados";
-            this.btnEditarEmpleados.Size = new System.Drawing.Size(181, 45);
-            this.btnEditarEmpleados.TabIndex = 7;
-            this.btnEditarEmpleados.Text = "Editar Empleados";
-            this.btnEditarEmpleados.UseVisualStyleBackColor = false;
-            this.btnEditarEmpleados.Click += new System.EventHandler(this.btnEditarEmpleados_Click);
-            // 
-            // btnRegistrarEmpleadosQuito
-            // 
-            this.btnRegistrarEmpleadosQuito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnRegistrarEmpleadosQuito.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistrarEmpleadosQuito.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarEmpleadosQuito.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistrarEmpleadosQuito.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarEmpleadosQuito.Location = new System.Drawing.Point(612, 45);
-            this.btnRegistrarEmpleadosQuito.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRegistrarEmpleadosQuito.Name = "btnRegistrarEmpleadosQuito";
-            this.btnRegistrarEmpleadosQuito.Size = new System.Drawing.Size(399, 45);
-            this.btnRegistrarEmpleadosQuito.TabIndex = 6;
-            this.btnRegistrarEmpleadosQuito.Text = "Registrar Empleados Quito";
-            this.btnRegistrarEmpleadosQuito.UseVisualStyleBackColor = false;
-            this.btnRegistrarEmpleadosQuito.Click += new System.EventHandler(this.btnRegistrarEmpleadosQuito_Click);
-            // 
-            // cmbSucursalEmpleado
-            // 
-            this.cmbSucursalEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSucursalEmpleado.FormattingEnabled = true;
-            this.cmbSucursalEmpleado.Location = new System.Drawing.Point(215, 183);
-            this.cmbSucursalEmpleado.Name = "cmbSucursalEmpleado";
-            this.cmbSucursalEmpleado.Size = new System.Drawing.Size(368, 28);
-            this.cmbSucursalEmpleado.TabIndex = 5;
-            // 
-            // btnRegistrarProductosGuayaquil
-            // 
-            this.btnRegistrarProductosGuayaquil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnRegistrarProductosGuayaquil.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistrarProductosGuayaquil.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarProductosGuayaquil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistrarProductosGuayaquil.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarProductosGuayaquil.Location = new System.Drawing.Point(612, 109);
-            this.btnRegistrarProductosGuayaquil.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRegistrarProductosGuayaquil.Name = "btnRegistrarProductosGuayaquil";
-            this.btnRegistrarProductosGuayaquil.Size = new System.Drawing.Size(399, 45);
-            this.btnRegistrarProductosGuayaquil.TabIndex = 14;
-            this.btnRegistrarProductosGuayaquil.Text = "Registrar Productos Guayaquil";
-            this.btnRegistrarProductosGuayaquil.UseVisualStyleBackColor = false;
-            this.btnRegistrarProductosGuayaquil.Click += new System.EventHandler(this.btnRegistrarProductosGuayaquil_Click);
             // 
             // txtNombreProducto
             // 
             this.txtNombreProducto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNombreProducto.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNombreProducto.Location = new System.Drawing.Point(215, 88);
+            this.txtNombreProducto.Location = new System.Drawing.Point(215, 113);
             this.txtNombreProducto.Name = "txtNombreProducto";
             this.txtNombreProducto.Size = new System.Drawing.Size(368, 27);
             this.txtNombreProducto.TabIndex = 11;
@@ -520,7 +352,7 @@
             // 
             this.lblIngresoNombre.AutoSize = true;
             this.lblIngresoNombre.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIngresoNombre.Location = new System.Drawing.Point(12, 95);
+            this.lblIngresoNombre.Location = new System.Drawing.Point(12, 115);
             this.lblIngresoNombre.Name = "lblIngresoNombre";
             this.lblIngresoNombre.Size = new System.Drawing.Size(164, 20);
             this.lblIngresoNombre.TabIndex = 10;
@@ -530,7 +362,7 @@
             // 
             this.lblPrecio.AutoSize = true;
             this.lblPrecio.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrecio.Location = new System.Drawing.Point(12, 155);
+            this.lblPrecio.Location = new System.Drawing.Point(12, 175);
             this.lblPrecio.Name = "lblPrecio";
             this.lblPrecio.Size = new System.Drawing.Size(152, 20);
             this.lblPrecio.TabIndex = 12;
@@ -540,7 +372,7 @@
             // 
             this.txtPrecioProducto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPrecioProducto.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecioProducto.Location = new System.Drawing.Point(215, 148);
+            this.txtPrecioProducto.Location = new System.Drawing.Point(215, 173);
             this.txtPrecioProducto.Name = "txtPrecioProducto";
             this.txtPrecioProducto.Size = new System.Drawing.Size(368, 27);
             this.txtPrecioProducto.TabIndex = 13;
@@ -553,7 +385,7 @@
             this.btnEliminarProductos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnEliminarProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEliminarProductos.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminarProductos.Location = new System.Drawing.Point(830, 174);
+            this.btnEliminarProductos.Location = new System.Drawing.Point(830, 155);
             this.btnEliminarProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEliminarProductos.Name = "btnEliminarProductos";
             this.btnEliminarProductos.Size = new System.Drawing.Size(181, 45);
@@ -569,7 +401,7 @@
             this.btnEditarProductos.FlatAppearance.BorderSize = 0;
             this.btnEditarProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditarProductos.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEditarProductos.Location = new System.Drawing.Point(612, 174);
+            this.btnEditarProductos.Location = new System.Drawing.Point(612, 155);
             this.btnEditarProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditarProductos.Name = "btnEditarProductos";
             this.btnEditarProductos.Size = new System.Drawing.Size(181, 45);
@@ -578,21 +410,203 @@
             this.btnEditarProductos.UseVisualStyleBackColor = false;
             this.btnEditarProductos.Click += new System.EventHandler(this.btnEditarProductos_Click);
             // 
-            // btnRegistrarProductosQuito
+            // btnRegistrarProductos
             // 
-            this.btnRegistrarProductosQuito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnRegistrarProductosQuito.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegistrarProductosQuito.FlatAppearance.BorderSize = 0;
-            this.btnRegistrarProductosQuito.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegistrarProductosQuito.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarProductosQuito.Location = new System.Drawing.Point(612, 45);
-            this.btnRegistrarProductosQuito.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnRegistrarProductosQuito.Name = "btnRegistrarProductosQuito";
-            this.btnRegistrarProductosQuito.Size = new System.Drawing.Size(399, 45);
-            this.btnRegistrarProductosQuito.TabIndex = 6;
-            this.btnRegistrarProductosQuito.Text = "Registrar Productos Quito";
-            this.btnRegistrarProductosQuito.UseVisualStyleBackColor = false;
-            this.btnRegistrarProductosQuito.Click += new System.EventHandler(this.btnRegistrarProductosQuito_Click);
+            this.btnRegistrarProductos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
+            this.btnRegistrarProductos.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegistrarProductos.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarProductos.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarProductos.Location = new System.Drawing.Point(612, 75);
+            this.btnRegistrarProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnRegistrarProductos.Name = "btnRegistrarProductos";
+            this.btnRegistrarProductos.Size = new System.Drawing.Size(399, 45);
+            this.btnRegistrarProductos.TabIndex = 6;
+            this.btnRegistrarProductos.Text = "Registrar Productos";
+            this.btnRegistrarProductos.UseVisualStyleBackColor = false;
+            this.btnRegistrarProductos.Click += new System.EventHandler(this.btnRegistrarProductos_Click);
+            // 
+            // pnlDatosEmpleados
+            // 
+            this.pnlDatosEmpleados.Controls.Add(this.txtIDEmpleado);
+            this.pnlDatosEmpleados.Controls.Add(this.label9);
+            this.pnlDatosEmpleados.Controls.Add(this.label3);
+            this.pnlDatosEmpleados.Controls.Add(this.txtNombreEmpleado);
+            this.pnlDatosEmpleados.Controls.Add(this.label1);
+            this.pnlDatosEmpleados.Controls.Add(this.label2);
+            this.pnlDatosEmpleados.Controls.Add(this.txtTelefonoEmpleado);
+            this.pnlDatosEmpleados.Controls.Add(this.btnEliminarEmpleados);
+            this.pnlDatosEmpleados.Controls.Add(this.btnEditarEmpleados);
+            this.pnlDatosEmpleados.Controls.Add(this.btnRegistrarEmpleadosQuito);
+            this.pnlDatosEmpleados.Controls.Add(this.cmbSucursalEmpleado);
+            this.pnlDatosEmpleados.Location = new System.Drawing.Point(26, 63);
+            this.pnlDatosEmpleados.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlDatosEmpleados.Name = "pnlDatosEmpleados";
+            this.pnlDatosEmpleados.Size = new System.Drawing.Size(1047, 279);
+            this.pnlDatosEmpleados.TabIndex = 15;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 214);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 20);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Sucursal";
+            // 
+            // txtNombreEmpleado
+            // 
+            this.txtNombreEmpleado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNombreEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNombreEmpleado.Location = new System.Drawing.Point(215, 91);
+            this.txtNombreEmpleado.Name = "txtNombreEmpleado";
+            this.txtNombreEmpleado.Size = new System.Drawing.Size(368, 27);
+            this.txtNombreEmpleado.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 93);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(168, 20);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Nombre del empleado";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(12, 154);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(152, 20);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Número de teléfono";
+            // 
+            // txtTelefonoEmpleado
+            // 
+            this.txtTelefonoEmpleado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTelefonoEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTelefonoEmpleado.Location = new System.Drawing.Point(215, 151);
+            this.txtTelefonoEmpleado.Name = "txtTelefonoEmpleado";
+            this.txtTelefonoEmpleado.Size = new System.Drawing.Size(368, 27);
+            this.txtTelefonoEmpleado.TabIndex = 13;
+            // 
+            // btnEliminarEmpleados
+            // 
+            this.btnEliminarEmpleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
+            this.btnEliminarEmpleados.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEliminarEmpleados.FlatAppearance.BorderSize = 0;
+            this.btnEliminarEmpleados.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnEliminarEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEliminarEmpleados.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminarEmpleados.Location = new System.Drawing.Point(830, 155);
+            this.btnEliminarEmpleados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEliminarEmpleados.Name = "btnEliminarEmpleados";
+            this.btnEliminarEmpleados.Size = new System.Drawing.Size(181, 45);
+            this.btnEliminarEmpleados.TabIndex = 9;
+            this.btnEliminarEmpleados.Text = "Eliminar Empleados";
+            this.btnEliminarEmpleados.UseVisualStyleBackColor = false;
+            this.btnEliminarEmpleados.Click += new System.EventHandler(this.btnEliminarEmpleados_Click);
+            // 
+            // btnEditarEmpleados
+            // 
+            this.btnEditarEmpleados.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
+            this.btnEditarEmpleados.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEditarEmpleados.FlatAppearance.BorderSize = 0;
+            this.btnEditarEmpleados.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEditarEmpleados.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEditarEmpleados.Location = new System.Drawing.Point(612, 155);
+            this.btnEditarEmpleados.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEditarEmpleados.Name = "btnEditarEmpleados";
+            this.btnEditarEmpleados.Size = new System.Drawing.Size(181, 45);
+            this.btnEditarEmpleados.TabIndex = 7;
+            this.btnEditarEmpleados.Text = "Editar Empleados";
+            this.btnEditarEmpleados.UseVisualStyleBackColor = false;
+            this.btnEditarEmpleados.Click += new System.EventHandler(this.btnEditarEmpleados_Click);
+            // 
+            // btnRegistrarEmpleadosQuito
+            // 
+            this.btnRegistrarEmpleadosQuito.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
+            this.btnRegistrarEmpleadosQuito.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegistrarEmpleadosQuito.FlatAppearance.BorderSize = 0;
+            this.btnRegistrarEmpleadosQuito.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegistrarEmpleadosQuito.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegistrarEmpleadosQuito.Location = new System.Drawing.Point(612, 75);
+            this.btnRegistrarEmpleadosQuito.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnRegistrarEmpleadosQuito.Name = "btnRegistrarEmpleadosQuito";
+            this.btnRegistrarEmpleadosQuito.Size = new System.Drawing.Size(399, 45);
+            this.btnRegistrarEmpleadosQuito.TabIndex = 6;
+            this.btnRegistrarEmpleadosQuito.Text = "Registrar Empleados";
+            this.btnRegistrarEmpleadosQuito.UseVisualStyleBackColor = false;
+            this.btnRegistrarEmpleadosQuito.Click += new System.EventHandler(this.btnRegistrarEmpleados_Click);
+            // 
+            // cmbSucursalEmpleado
+            // 
+            this.cmbSucursalEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbSucursalEmpleado.FormattingEnabled = true;
+            this.cmbSucursalEmpleado.Location = new System.Drawing.Point(215, 211);
+            this.cmbSucursalEmpleado.Name = "cmbSucursalEmpleado";
+            this.cmbSucursalEmpleado.Size = new System.Drawing.Size(368, 28);
+            this.cmbSucursalEmpleado.TabIndex = 5;
+            // 
+            // txtIDEmpleado
+            // 
+            this.txtIDEmpleado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIDEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIDEmpleado.Location = new System.Drawing.Point(215, 36);
+            this.txtIDEmpleado.Name = "txtIDEmpleado";
+            this.txtIDEmpleado.Size = new System.Drawing.Size(368, 27);
+            this.txtIDEmpleado.TabIndex = 17;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(12, 38);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(102, 20);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "ID Empleado";
+            // 
+            // txtIDCliente
+            // 
+            this.txtIDCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIDCliente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIDCliente.Location = new System.Drawing.Point(215, 26);
+            this.txtIDCliente.Name = "txtIDCliente";
+            this.txtIDCliente.Size = new System.Drawing.Size(368, 27);
+            this.txtIDCliente.TabIndex = 21;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(12, 28);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(81, 20);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "ID Cliente";
+            // 
+            // txtIDProducto
+            // 
+            this.txtIDProducto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIDProducto.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIDProducto.Location = new System.Drawing.Point(215, 54);
+            this.txtIDProducto.Name = "txtIDProducto";
+            this.txtIDProducto.Size = new System.Drawing.Size(368, 27);
+            this.txtIDProducto.TabIndex = 18;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(12, 56);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(97, 20);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "ID Producto";
             // 
             // FrmRegistro
             // 
@@ -602,6 +616,7 @@
             this.ClientSize = new System.Drawing.Size(1103, 676);
             this.Controls.Add(this.pnlDatosEmpleados);
             this.Controls.Add(this.pnlDatosProductos);
+            this.Controls.Add(this.pnlDatosClientes);
             this.Controls.Add(this.dgvMostrarDatos);
             this.Controls.Add(this.lblMensajeIndicativo);
             this.Controls.Add(this.btnEmpleados);
@@ -614,10 +629,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvMostrarDatos)).EndInit();
             this.pnlDatosProductos.ResumeLayout(false);
             this.pnlDatosProductos.PerformLayout();
-            this.pnlDatosEmpleados.ResumeLayout(false);
-            this.pnlDatosEmpleados.PerformLayout();
             this.pnlDatosClientes.ResumeLayout(false);
             this.pnlDatosClientes.PerformLayout();
+            this.pnlDatosEmpleados.ResumeLayout(false);
+            this.pnlDatosEmpleados.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -633,15 +648,13 @@
         private System.Windows.Forms.Panel pnlDatosProductos;
         private System.Windows.Forms.Button btnEliminarProductos;
         private System.Windows.Forms.Button btnEditarProductos;
-        private System.Windows.Forms.Button btnRegistrarProductosQuito;
+        private System.Windows.Forms.Button btnRegistrarProductos;
         private System.Windows.Forms.TextBox txtNombreProducto;
         private System.Windows.Forms.Label lblIngresoNombre;
         private System.Windows.Forms.Label lblPrecio;
         private System.Windows.Forms.TextBox txtPrecioProducto;
-        private System.Windows.Forms.Button btnRegistrarProductosGuayaquil;
         private System.Windows.Forms.Panel pnlDatosEmpleados;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnRegistrarEmpleadosGuayaquil;
         private System.Windows.Forms.TextBox txtNombreEmpleado;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -652,18 +665,23 @@
         private System.Windows.Forms.ComboBox cmbSucursalEmpleado;
         private System.Windows.Forms.Panel pnlDatosClientes;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnRegistrarClientesGuayaquil;
         private System.Windows.Forms.TextBox txtNombreCliente;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtTelefonoCLiente;
         private System.Windows.Forms.Button btnEliminarClientes;
         private System.Windows.Forms.Button btnEditarClientes;
-        private System.Windows.Forms.Button btnRegistarClientesQuito;
+        private System.Windows.Forms.Button btnRegistarClientes;
         private System.Windows.Forms.ComboBox cmbSucursalCliente;
         private System.Windows.Forms.TextBox txtDireccionCliente;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtApellidoCliente;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtIDProducto;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtIDCliente;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtIDEmpleado;
+        private System.Windows.Forms.Label label9;
     }
 }

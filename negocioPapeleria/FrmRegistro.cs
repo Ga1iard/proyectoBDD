@@ -11,39 +11,52 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace negocioPapeleria
 {
     public partial class FrmRegistro : Form
     {
+
+        private int indiceBotones = 1;  //1 = Productos, 2 = Empleados, 3 = Clientes
+
+        private String idSucursal = ""; //1 = Quito, 2 = Guayaquil
+
         //Producto
+        private String idProducto = "";
         private String nombreProducto = "";
         private String precioProducto = "";
+        private String idProductoSeleccionado = "";
 
         //Empleado
+        private String idEmpleado = "";
         private String nombreEmpleado = "";
         private String telefonoEmpleado = "";
         private String sucursalEmpleado = "";
+        private String idEmpleadoSeleccionado = "";
 
         //Cliente
+        private String idCliente = "";
         private String nombreCliente = "";
         private String apellidoCliente = "";
-        private String direccionClinete = "";
-        private String telefonoClinete = "";
+        private String direccionCliente = "";
+        private String telefonoCliente = "";
         private String sucursalCliente = "";
+        private String idClienteSeleccionado = "";
 
-        conexionPostgres conn;
+        conexionSQLServer conn;
+
         public FrmRegistro()
         {
             InitializeComponent();
             dgvMostrarDatos.CellMouseMove += dgvMostrarDatos_CellMouseMove;
 
-            conn = new conexionPostgres();
+            conn = new conexionSQLServer();
 
-            pnlDatosProductos.Paint += Panel1_Paint;
-            pnlDatosEmpleados.Paint += Panel1_Paint;
-            pnlDatosClientes.Paint += Panel1_Paint;
+            pnlDatosProductos.Paint += Panel_Paint;
+            pnlDatosEmpleados.Paint += Panel_Paint;
+            pnlDatosClientes.Paint += Panel_Paint;
 
             pnlDatosProductos.Parent = this;
             pnlDatosEmpleados.Parent = this;
@@ -68,27 +81,135 @@ namespace negocioPapeleria
             dgvMostrarDatos.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(93, 183, 185);
             dgvMostrarDatos.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
 
+            dgvMostrarDatos.Columns.Add("id_producto", "ID del Producto");
+            dgvMostrarDatos.Columns.Add("nombre_producto", "Nombre del Producto");
+            dgvMostrarDatos.Columns.Add("precio_producto", "Precio Producto");
+
+            dgvMostrarDatos.Columns[0].Width = 186;
+            dgvMostrarDatos.Columns[1].Width = 368;
+            dgvMostrarDatos.Columns[2].Width = 208;
+
+
+            LlenarDGV();
+
+
+
         }
 
-        private void Panel1_Paint(object sender, PaintEventArgs e)
+        private void Panel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = sender as Panel;
             ControlPaint.DrawBorder(e.Graphics, p.ClientRectangle, Color.FromArgb(68, 110, 108), ButtonBorderStyle.Solid);
         }
 
-        private string FormatearNumeros(string priceString, string cultureName)
+        public void ObtenerSucursal(ComboBox comboBox)
         {
-            CultureInfo culture = new CultureInfo(cultureName);
-            float precioProducto = float.Parse(priceString, culture);
-            return precioProducto.ToString(culture);
+            String consultaSucursal = "SELECT ciudad FROM Sucursales";
+
+            // Limpia el ComboBox antes de agregar nuevos elementos
+            comboBox.Items.Clear();
+
+            // Abre la conexión
+            conn.AbrirConexion();
+
+            try
+            {
+                // Crear el comando
+                SqlCommand comando = new SqlCommand(consultaSucursal, conn.GetConnection());
+
+                // Ejecutar la consulta y obtener los resultados
+                SqlDataReader reader = comando.ExecuteReader();
+
+                // Procesar los resultados
+                while (reader.Read())
+                {
+                    // Obtener el valor de la columna "ciudad"
+                    string ciudad = reader["ciudad"].ToString();
+
+                    // Agregar el valor al ComboBox
+                    comboBox.Items.Add(ciudad);
+                }
+
+                // Cerrar el lector
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al ejecutar la consulta: {ex.Message}");
+            }
+            finally
+            {
+                // Cierra la conexión
+                conn.CerrarConexion();
+            }
+        }
+
+        private void LlenarDGV()
+        {
+            String consultaLlenarDGV = "";
+
+            if (indiceBotones == 1)
+            {
+                consultaLlenarDGV = "select id_producto, nombre_prod, precio_unit  from Productos";
+            }
+            if (indiceBotones == 2)
+            {
+                consultaLlenarDGV = "select id_empleado, nombre, num_telefono, id_sucursal  from Empleados";
+            }
+            if (indiceBotones == 3)
+            {
+                consultaLlenarDGV = "select c.id_cliente, c.nombre_cli, c.apellido_cli, c.tel_cli, cu.dir_cli, c.id_sucursal " +
+                    "from Clientes c JOIN ClientesUbicacion cu ON c.id_cliente = cu.id_cliente";
+            }
+
+            conn.AbrirConexion();
+
+            try
+            {
+                // Crear el comando
+                SqlCommand comando = new SqlCommand(consultaLlenarDGV, conn.GetConnection());
+                SqlDataReader reader = comando.ExecuteReader();
+
+                // Limpiar las filas actuales del DataGridView
+                dgvMostrarDatos.Rows.Clear();
+
+                // Llenar el DataGridView con los datos
+                while (reader.Read())
+                {
+                    if (indiceBotones == 1)
+                    {
+                        dgvMostrarDatos.Rows.Add(reader["id_producto"], reader["nombre_prod"], reader["precio_unit"]);
+                    }
+                    else if (indiceBotones == 2)
+                    {
+                        dgvMostrarDatos.Rows.Add(reader["id_empleado"], reader["nombre"], reader["num_telefono"], reader["id_sucursal"]);
+                    }
+                    else if (indiceBotones == 3)
+                    {
+                        dgvMostrarDatos.Rows.Add(reader["id_cliente"], reader["nombre_cli"], reader["apellido_cli"], 
+                            reader["dir_cli"], reader["tel_cli"], reader["id_sucursal"]);
+                    }
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al llenar el DataGridView: {ex.Message}");
+            }
+            finally
+            {
+                // Cierra la conexión
+                conn.CerrarConexion();
+            }
         }
 
 
-        /*  
-         *  -------------------------------------------------------------------------
-         *  EN ESTOS MÉTODOS ÚNICAMENTE SE HACEN COSAS RELACIONADAS AL DATA GRID VIEW
-         *  -------------------------------------------------------------------------
-         */
+            /*  
+             *  -------------------------------------------------------------------------
+             *  EN ESTOS MÉTODOS ÚNICAMENTE SE HACEN COSAS RELACIONADAS AL DATA GRID VIEW
+             *  -------------------------------------------------------------------------
+             */
 
         private void dgvMostrarDatos_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -122,13 +243,32 @@ namespace negocioPapeleria
             {
                 if (e.RowIndex >= 0)
                 {
-                    string idProducto = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_producto"].Value.ToString();
-                    dgvMostrarDatos[e.ColumnIndex, e.RowIndex].Tag = idProducto;
-                    string idProductoSeleccionado = idProducto;
-                    Console.WriteLine(idProductoSeleccionado);
+                    string idSeleccionado = "";
+
+                    if (indiceBotones == 1) // Productos
+                    {
+                        idSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_producto"].Value.ToString();
+                        idProductoSeleccionado = idSeleccionado;
+                        MessageBox.Show(idProductoSeleccionado);
+                    }
+                    else if (indiceBotones == 2) // Empleados
+                    {
+                        idSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_empleado"].Value.ToString();
+                        idEmpleadoSeleccionado = idSeleccionado;
+                        MessageBox.Show(idEmpleadoSeleccionado);
+                    }
+                    else if (indiceBotones == 3) // Clientes
+                    {
+                        idSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_cliente"].Value.ToString();
+                        idClienteSeleccionado = idSeleccionado;
+                        MessageBox.Show(idClienteSeleccionado);
+                    }
+
+                    // Mostrar el ID seleccionado en la consola para verificación
+                    Console.WriteLine(idSeleccionado);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 MessageBox.Show("Seleccione una celda válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -143,6 +283,11 @@ namespace negocioPapeleria
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
+            indiceBotones = 1;
+
+            lblMensajeIndicativo.Visible = false;
+
+
             //Colores del botón
             btnEmpleados.BackColor = Color.FromArgb(93, 183, 185);
             btnProductos.BackColor = Color.FromArgb(157, 196, 201);
@@ -167,10 +312,15 @@ namespace negocioPapeleria
             dgvMostrarDatos.Columns[1].Width = 368;
             dgvMostrarDatos.Columns[2].Width = 208;
 
+            LlenarDGV();
         }
 
         private void btnEmpleados_Click(object sender, EventArgs e)
         {
+            indiceBotones = 2;
+
+            lblMensajeIndicativo.Visible = false;
+
             //Colores del botón
             btnEmpleados.BackColor = Color.FromArgb(157, 196, 201);
             btnProductos.BackColor = Color.FromArgb(93, 183, 185);
@@ -197,10 +347,19 @@ namespace negocioPapeleria
             dgvMostrarDatos.Columns[2].Width = 162;
             dgvMostrarDatos.Columns[3].Width = 152;
 
+            //Llenar CMB
+            ObtenerSucursal(cmbSucursalEmpleado);
+
+            LlenarDGV();
+
         }
 
         private void btnClientes_Click(object sender, EventArgs e)
         {
+            indiceBotones = 3;
+
+            lblMensajeIndicativo.Visible = false;
+
             //Colores del botón
             btnEmpleados.BackColor = Color.FromArgb(93, 183, 185);
             btnProductos.BackColor = Color.FromArgb(93, 183, 185);
@@ -230,93 +389,247 @@ namespace negocioPapeleria
             dgvMostrarDatos.Columns[3].Width = 168;
             dgvMostrarDatos.Columns[4].Width = 110;
             dgvMostrarDatos.Columns[5].Width = 110;
+
+            //Llenar CMB
+            ObtenerSucursal(cmbSucursalCliente);
+
+            LlenarDGV();
         }
 
-        
 
 
         private void InicializarVariables()
         {
             //Producto
+            idProducto = txtIDProducto.Text;
             nombreProducto = txtNombreProducto.Text;
             precioProducto = txtPrecioProducto.Text;
 
             //Empleado
+            idEmpleado = txtIDEmpleado.Text;
             nombreEmpleado = txtNombreEmpleado.Text;
             telefonoEmpleado = txtTelefonoEmpleado.Text;
             sucursalEmpleado = cmbSucursalEmpleado.Text;
 
             //Cliente
+            idCliente = txtIDCliente.Text;
             nombreCliente = txtNombreCliente.Text;
             apellidoCliente = txtApellidoCliente.Text;
-            direccionClinete = txtDireccionCliente.Text;
-            telefonoClinete = txtTelefonoCLiente.Text;
+            direccionCliente = txtDireccionCliente.Text;
+            telefonoCliente = txtTelefonoCLiente.Text;
             sucursalCliente = cmbSucursalCliente.Text;
         }
 
+        private void LimpiarVariables()
+        {
+            // Limpiar campos de Producto
+            txtIDProducto.Clear();
+            txtNombreProducto.Clear();
+            txtPrecioProducto.Clear();
 
-        private void btnRegistrarProductosQuito_Click(object sender, EventArgs e)
-        {       
-            InicializarVariables();
+            // Limpiar campos de Empleado
+            txtIDEmpleado.Clear();
+            txtNombreEmpleado.Clear();
+            txtTelefonoEmpleado.Clear();
+            cmbSucursalEmpleado.SelectedIndex = 0;
+
+            // Limpiar campos de Cliente
+            txtIDCliente.Clear();
+            txtNombreCliente.Clear();
+            txtApellidoCliente.Clear();
+            txtDireccionCliente.Clear();
+            txtTelefonoCLiente.Clear();
+            cmbSucursalCliente.SelectedIndex = 0;
         }
 
-        private void btnRegistrarProductosGuayaquil_Click(object sender, EventArgs e)
+
+        // Obtener ID sucursal
+        private void ObtenerIDSucursal(string sucursal)
+        {
+            if (sucursal == "Quito")
+                idSucursal = "1";
+            if (sucursal == "Guayaquil")
+                idSucursal = "2";
+        }
+
+        // Función para ejecutar consultas de inserción, edición y eliminación
+        private void EjecutarConsulta(string consultaSQL)
+        {
+            // Abre la conexión
+            conn.AbrirConexion();
+
+            try
+            {
+                // Crear y ejecutar el comando
+                SqlCommand comando = new SqlCommand(consultaSQL, conn.GetConnection());
+                int filasAfectadas = comando.ExecuteNonQuery();
+
+                // Mostrar mensaje de éxito
+                MessageBox.Show($"{filasAfectadas} fila(s) afectada(s).", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Mostrar mensaje de error
+                MessageBox.Show($"Error al ejecutar la consulta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Cierra la conexión
+                conn.CerrarConexion();
+            }
+        }
+
+
+        /* Productos */
+        private void btnRegistrarProductos_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+
+            string insertarProducto = "INSERT INTO Productos(id_producto, nombre_prod, precio_unit) " +
+                $"VALUES({idProducto}, '{nombreProducto}', {precioProducto})";
+
+            EjecutarConsulta(insertarProducto);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
         private void btnEditarProductos_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+
+            string editarProducto = $"UPDATE Productos SET nombre_prod = '{nombreProducto}', " +
+                $"precio_unit = {precioProducto} WHERE id_producto = {idProductoSeleccionado}";
+
+            EjecutarConsulta(editarProducto);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
         private void btnEliminarProductos_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+
+            string eliminarProducto = $"DELETE FROM Productos WHERE id_producto = {idProductoSeleccionado}";
+
+            EjecutarConsulta(eliminarProducto);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
 
 
-        private void btnRegistrarEmpleadosQuito_Click(object sender, EventArgs e)
+        /* Empleados */
+        private void btnRegistrarEmpleados_Click(object sender, EventArgs e)
         {
             InicializarVariables();
-        }
+            ObtenerIDSucursal(sucursalEmpleado);
 
-        private void btnRegistrarEmpleadosGuayaquil_Click(object sender, EventArgs e)
-        {
-            InicializarVariables();
+            string insertarEmpleado = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                "insert into empleados(id_empleado,nombre, num_telefono, id_sucursal) " +
+                $"Values({idEmpleado},'{nombreEmpleado}', '{telefonoEmpleado}', {idSucursal}) " +
+                "COMMIT TRANSACTION";
+
+            EjecutarConsulta(insertarEmpleado);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
         private void btnEditarEmpleados_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+            ObtenerIDSucursal(sucursalEmpleado);
+
+            string editarEmpleado = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                $"update empleados set id_empleado = {idEmpleado}, nombre = '{nombreEmpleado}', num_telefono = '{telefonoEmpleado}', " +
+                $"id_sucursal = {idSucursal} " +
+                $"where id_empleado = {idEmpleadoSeleccionado} " +
+                "COMMIT TRANSACTION";
+
+            EjecutarConsulta(editarEmpleado);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
         private void btnEliminarEmpleados_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+            ObtenerIDSucursal(sucursalEmpleado);
+
+            string eliminarEmpleado = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                $"Delete from empleados where id_empleado = {idEmpleadoSeleccionado} " +
+                "COMMIT TRANSACTION";
+
+            EjecutarConsulta(eliminarEmpleado);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
 
 
-        private void btnRegistrarClientesQuito_Click(object sender, EventArgs e)
+        /* Clientes */
+        private void btnRegistrarClientes_Click(object sender, EventArgs e)
         {
             InicializarVariables();
-        }
+            ObtenerIDSucursal(sucursalCliente);
 
-        private void btnRegistrarClientesGuayaquil_Click(object sender, EventArgs e)
-        {
-            InicializarVariables();
+            string insertarCliente = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                "insert into Clientes(id_cliente,nombre_cli, apellido_cli, tel_cli, id_sucursal) " +
+                $"values({idCliente}, '{nombreCliente}', '{apellidoCliente}', '{telefonoCliente}', {idSucursal}); " +
+                "insert into ClientesUbicacion(id_cliente,dir_cli) " +
+                $"values({idCliente}, '{direccionCliente}'); " +
+                "COMMIT TRANSACTION";
+
+            EjecutarConsulta(insertarCliente);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
         private void btnEditarClientes_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+            ObtenerIDSucursal(sucursalCliente);
+
+            string editarCliente = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                $"update Clientes set id_cliente = {idCliente}, nombre_cli = '{nombreCliente}', apellido_cli = '{apellidoCliente}', " +
+                $"tel_cli ='{telefonoCliente}', id_sucursal = {idSucursal} " +
+                $"where id_cliente = {idClienteSeleccionado}; " +
+                $"update ClientesUbicacion set dir_cli = '{direccionCliente}' " +
+                $"where id_cliente = {idClienteSeleccionado}; " +
+                "COMMIT TRANSACTION";
+
+            EjecutarConsulta(editarCliente);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
 
         private void btnEliminarClientes_Click(object sender, EventArgs e)
         {
             InicializarVariables();
+            ObtenerIDSucursal(sucursalCliente);
+
+            string eliminarCliente = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                $"Delete from ClientesUbicacion where id_cliente = {idClienteSeleccionado}; " +
+                $"Delete from Clientes where id_cliente = {idClienteSeleccionado}; " +
+                "COMMIT TRANSACTION";
+
+            EjecutarConsulta(eliminarCliente);
+
+            LlenarDGV();
+            LimpiarVariables();
         }
     }
 }

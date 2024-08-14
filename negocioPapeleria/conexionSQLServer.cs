@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Npgsql;
+using System.Data.SqlClient;
 
 namespace negocioPapeleria
 {
-    internal class conexionPostgres
+    internal class conexionSQLServer
     {
 
-        private NpgsqlConnection conexion;
-        private string cadenaConexion = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=negocio";
+        private SqlConnection conexion;
+        private string cadenaConexion = "Server=WIN-BELB5I9714N;Database=Tienda_MarujaQuito;User Id=sa;Password=P@ssw0rd;";
 
-        public conexionPostgres()
+        public conexionSQLServer()
         {
             // Inicializa la conexión
-            conexion = new NpgsqlConnection(cadenaConexion);
+            conexion = new SqlConnection(cadenaConexion);
         }
 
-        public NpgsqlConnection GetConnection()
+        public SqlConnection GetConnection()
         {
             return conexion;
         }
@@ -49,6 +49,5 @@ namespace negocioPapeleria
                 Console.WriteLine($"Error al cerrar la conexión: {ex.Message}");
             }
         }
-
     }
 }

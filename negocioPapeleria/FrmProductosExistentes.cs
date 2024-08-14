@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace negocioPapeleria
 {
@@ -33,14 +34,14 @@ namespace negocioPapeleria
 
         CultureInfo cultureInfo = new CultureInfo("en-US");
 
-        conexionPostgres conn;
+        conexionSQLServer conn;
         exportarArchivo exp;
 
         public FrmProductosExistentes()
         {
             InitializeComponent();
 
-            conn = new conexionPostgres();
+            conn = new conexionSQLServer();
             exp = new exportarArchivo();
 
             LlenarCmbCategoria();
@@ -58,25 +59,25 @@ namespace negocioPapeleria
 
         private void LlenarCmbCategoria()
         {
-            conn.AbrirConexion();
-            string consulta = $"SELECT nombre_categoria FROM categorias";
-            DataSet ds = new DataSet();
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter(consulta, conn.GetConnection());
-            da.Fill(ds, "categorias");
-            cmbCategoria.DataSource = ds.Tables[0].DefaultView;
-            cmbCategoria.ValueMember = "nombre_categoria";
-            cmbCategoria.SelectedIndex = -1;
+            //conn.AbrirConexion();
+            //string consulta = $"SELECT nombre_categoria FROM categorias";
+            //DataSet ds = new DataSet();
+            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(consulta, conn.GetConnection());
+            //da.Fill(ds, "categorias");
+            //cmbCategoria.DataSource = ds.Tables[0].DefaultView;
+            //cmbCategoria.ValueMember = "nombre_categoria";
+            //cmbCategoria.SelectedIndex = -1;
         }
         private void LlenarCmbTipo()
         {
-            conn.AbrirConexion();
-            string consulta = $"SELECT nombre_tipo FROM tipo_productos WHERE id_tipo >= {idTipoMenor} AND id_tipo < {idTipoMayor} ORDER BY nombre_tipo ASC";
-            DataSet ds = new DataSet();
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter(consulta, conn.GetConnection());
-            da.Fill(ds, "tipo_productos");
-            cmbTipo.DataSource = ds.Tables[0].DefaultView;
-            cmbTipo.ValueMember = "nombre_tipo";
-            cmbTipo.SelectedIndex = -1;
+            //conn.AbrirConexion();
+            //string consulta = $"SELECT nombre_tipo FROM tipo_productos WHERE id_tipo >= {idTipoMenor} AND id_tipo < {idTipoMayor} ORDER BY nombre_tipo ASC";
+            //DataSet ds = new DataSet();
+            //NpgsqlDataAdapter da = new NpgsqlDataAdapter(consulta, conn.GetConnection());
+            //da.Fill(ds, "tipo_productos");
+            //cmbTipo.DataSource = ds.Tables[0].DefaultView;
+            //cmbTipo.ValueMember = "nombre_tipo";
+            //cmbTipo.SelectedIndex = -1;
         }
 
 
@@ -190,46 +191,46 @@ namespace negocioPapeleria
         }
         private void LlenarDgvMostrarDatos()
         {
-            dgvMostrarDatos.Rows.Clear();
+            //dgvMostrarDatos.Rows.Clear();
 
-            conn.AbrirConexion();
+            //conn.AbrirConexion();
 
-            string obtenerDatosProducto = "SELECT p.id_producto, p.nombre_producto, p.precio_producto, c.nombre_categoria, t.nombre_tipo FROM productos p " +
-                "INNER JOIN categorias c ON p.id_categoria = c.id_categoria INNER JOIN tipo_productos t ON p.id_tipo = t.id_tipo ORDER BY id_producto ASC";
+            //string obtenerDatosProducto = "SELECT p.id_producto, p.nombre_producto, p.precio_producto, c.nombre_categoria, t.nombre_tipo FROM productos p " +
+            //    "INNER JOIN categorias c ON p.id_categoria = c.id_categoria INNER JOIN tipo_productos t ON p.id_tipo = t.id_tipo ORDER BY id_producto ASC";
 
-            try
-            {
-                using (NpgsqlCommand command = new NpgsqlCommand(obtenerDatosProducto, conn.GetConnection()))
-                {
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            idProducto = reader.GetInt32(0);
-                            nombreProducto = reader.GetString(1);
-                            precioProducto = reader.GetFloat(2);
-                            nombreCategoria = reader.GetString(3);
-                            nombreTipo = reader.GetString(4);
+            //try
+            //{
+            //    using (NpgsqlCommand command = new NpgsqlCommand(obtenerDatosProducto, conn.GetConnection()))
+            //    {
+            //        using (NpgsqlDataReader reader = command.ExecuteReader())
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                idProducto = reader.GetInt32(0);
+            //                nombreProducto = reader.GetString(1);
+            //                precioProducto = reader.GetFloat(2);
+            //                nombreCategoria = reader.GetString(3);
+            //                nombreTipo = reader.GetString(4);
 
-                            Console.WriteLine(idProducto);
-                            Console.WriteLine(nombreProducto);
-                            Console.WriteLine(nombreCategoria);
-                            Console.WriteLine(nombreTipo);
-                            Console.WriteLine(precioProducto);
+            //                Console.WriteLine(idProducto);
+            //                Console.WriteLine(nombreProducto);
+            //                Console.WriteLine(nombreCategoria);
+            //                Console.WriteLine(nombreTipo);
+            //                Console.WriteLine(precioProducto);
 
-                            dgvMostrarDatos.Rows.Add(idProducto, nombreProducto, nombreTipo, precioProducto, nombreCategoria);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Ejecución finalizada");
-            }
+            //                dgvMostrarDatos.Rows.Add(idProducto, nombreProducto, nombreTipo, precioProducto, nombreCategoria);
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error: " + ex.Message);
+            //}
+            //finally
+            //{
+            //    Console.WriteLine("Ejecución finalizada");
+            //}
         }
         private void dgvMostrarDatos_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -260,120 +261,120 @@ namespace negocioPapeleria
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
-            try
-            {
-                dgvMostrarDatos.Rows.Clear();
+            //try
+            //{
+            //    dgvMostrarDatos.Rows.Clear();
 
-                nombreTipo = cmbTipo.Text;
-                nombreCategoria = cmbCategoria.Text;
+            //    nombreTipo = cmbTipo.Text;
+            //    nombreCategoria = cmbCategoria.Text;
 
-                string consultaCmb = "";
-                string consultaRbt = "";
-                string orderBy = "ORDER BY id_producto ASC";
-                string consultaFiltrarDatos = "SELECT p.id_producto, p.nombre_producto, p.precio_producto, c.nombre_categoria, t.nombre_tipo FROM productos p " +
-                    "INNER JOIN categorias c ON p.id_categoria = c.id_categoria INNER JOIN tipo_productos t ON p.id_tipo = t.id_tipo ";
+            //    string consultaCmb = "";
+            //    string consultaRbt = "";
+            //    string orderBy = "ORDER BY id_producto ASC";
+            //    string consultaFiltrarDatos = "SELECT p.id_producto, p.nombre_producto, p.precio_producto, c.nombre_categoria, t.nombre_tipo FROM productos p " +
+            //        "INNER JOIN categorias c ON p.id_categoria = c.id_categoria INNER JOIN tipo_productos t ON p.id_tipo = t.id_tipo ";
 
-                if (cmbCategoria.SelectedIndex == -1 && cmbTipo.SelectedIndex == -1 && !rbtRangoPrecio.Checked && !rbtPrecioEspecífico.Checked)
-                {
-                    throw new ArgumentException("Seleccione una opción válida");
-                }
+            //    if (cmbCategoria.SelectedIndex == -1 && cmbTipo.SelectedIndex == -1 && !rbtRangoPrecio.Checked && !rbtPrecioEspecífico.Checked)
+            //    {
+            //        throw new ArgumentException("Seleccione una opción válida");
+            //    }
 
-                if ((rbtPrecioEspecífico.Checked && (txtPrecio.Text == "0" || txtPrecio.Text == "")) || (rbtRangoPrecio.Checked &&
-                    (txtPrecio.Text == "0" || txtPrecio.Text == "" || txtPrecioMayor.Text == "0" || txtPrecioMayor.Text == "")))
-                {
-                    throw new ArgumentException("Ingrese un precio válido");
-                }
+            //    if ((rbtPrecioEspecífico.Checked && (txtPrecio.Text == "0" || txtPrecio.Text == "")) || (rbtRangoPrecio.Checked &&
+            //        (txtPrecio.Text == "0" || txtPrecio.Text == "" || txtPrecioMayor.Text == "0" || txtPrecioMayor.Text == "")))
+            //    {
+            //        throw new ArgumentException("Ingrese un precio válido");
+            //    }
 
-                if (cmbTipo.SelectedIndex == -1)
-                {
-                    consultaCmb = $"WHERE c.nombre_categoria = '{nombreCategoria}' ";
-                }
-                if (cmbTipo.SelectedIndex != -1)
-                {
-                    consultaCmb = $"WHERE c.nombre_categoria = '{nombreCategoria}' AND t.nombre_tipo = '{nombreTipo}' ";
-                }
+            //    if (cmbTipo.SelectedIndex == -1)
+            //    {
+            //        consultaCmb = $"WHERE c.nombre_categoria = '{nombreCategoria}' ";
+            //    }
+            //    if (cmbTipo.SelectedIndex != -1)
+            //    {
+            //        consultaCmb = $"WHERE c.nombre_categoria = '{nombreCategoria}' AND t.nombre_tipo = '{nombreTipo}' ";
+            //    }
 
-                if (rbtPrecioEspecífico.Checked)
-                {
-                    precioProducto = float.Parse(txtPrecio.Text, cultureInfo);
+            //    if (rbtPrecioEspecífico.Checked)
+            //    {
+            //        precioProducto = float.Parse(txtPrecio.Text, cultureInfo);
 
-                    string precioProductoString = precioProducto.ToString(cultureInfo);
+            //        string precioProductoString = precioProducto.ToString(cultureInfo);
 
-                    if (cmbCategoria.SelectedIndex == -1 && cmbTipo.SelectedIndex == -1)
-                    {
-                        consultaCmb = "";
-                        consultaRbt = $"WHERE p.precio_producto = {precioProductoString} ";
+            //        if (cmbCategoria.SelectedIndex == -1 && cmbTipo.SelectedIndex == -1)
+            //        {
+            //            consultaCmb = "";
+            //            consultaRbt = $"WHERE p.precio_producto = {precioProductoString} ";
 
-                    }
-                    if (cmbCategoria.SelectedIndex != -1)
-                    {
-                        consultaRbt = $"AND p.precio_producto = {precioProductoString} ";
-                    }
-                }
-                if (rbtRangoPrecio.Checked)
-                {
+            //        }
+            //        if (cmbCategoria.SelectedIndex != -1)
+            //        {
+            //            consultaRbt = $"AND p.precio_producto = {precioProductoString} ";
+            //        }
+            //    }
+            //    if (rbtRangoPrecio.Checked)
+            //    {
 
-                    precioProducto = float.Parse(txtPrecio.Text, cultureInfo);
-                    precioProductoHasta = float.Parse(txtPrecioMayor.Text, cultureInfo);
+            //        precioProducto = float.Parse(txtPrecio.Text, cultureInfo);
+            //        precioProductoHasta = float.Parse(txtPrecioMayor.Text, cultureInfo);
 
-                    string precioProductoString = precioProducto.ToString(cultureInfo);
-                    string precioProductoHastaString = precioProductoHasta.ToString(cultureInfo);
+            //        string precioProductoString = precioProducto.ToString(cultureInfo);
+            //        string precioProductoHastaString = precioProductoHasta.ToString(cultureInfo);
 
-                    if (precioProducto > precioProductoHasta)
-                    {
-                        throw new ArgumentException("El precio en el apartado <Hasta> debe ser mayor");
-                    }
+            //        if (precioProducto > precioProductoHasta)
+            //        {
+            //            throw new ArgumentException("El precio en el apartado <Hasta> debe ser mayor");
+            //        }
 
-                    if (cmbCategoria.SelectedIndex == -1 && cmbTipo.SelectedIndex == -1)
-                    {
-                        consultaCmb = "";
-                        consultaRbt = $"WHERE p.precio_producto >= {precioProductoString} AND p.precio_producto <= {precioProductoHastaString} ";
-                    }
-                    if (cmbCategoria.SelectedIndex != -1)
-                    {
-                        consultaRbt = $"AND p.precio_producto >= {precioProductoString} AND p.precio_producto <= {precioProductoHastaString} ";
-                    }
-                }
+            //        if (cmbCategoria.SelectedIndex == -1 && cmbTipo.SelectedIndex == -1)
+            //        {
+            //            consultaCmb = "";
+            //            consultaRbt = $"WHERE p.precio_producto >= {precioProductoString} AND p.precio_producto <= {precioProductoHastaString} ";
+            //        }
+            //        if (cmbCategoria.SelectedIndex != -1)
+            //        {
+            //            consultaRbt = $"AND p.precio_producto >= {precioProductoString} AND p.precio_producto <= {precioProductoHastaString} ";
+            //        }
+            //    }
 
-                consultaFiltrarDatos += consultaCmb += consultaRbt += orderBy;
+            //    consultaFiltrarDatos += consultaCmb += consultaRbt += orderBy;
 
-                Console.WriteLine(consultaFiltrarDatos);
+            //    Console.WriteLine(consultaFiltrarDatos);
 
-                using (NpgsqlCommand command = new NpgsqlCommand(consultaFiltrarDatos, conn.GetConnection()))
-                {
-                    using (NpgsqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            idProducto = reader.GetInt32(0);
-                            nombreProducto = reader.GetString(1);
-                            precioProducto = reader.GetFloat(2);
-                            nombreCategoria = reader.GetString(3);
-                            nombreTipo = reader.GetString(4);
+            //    using (NpgsqlCommand command = new NpgsqlCommand(consultaFiltrarDatos, conn.GetConnection()))
+            //    {
+            //        using (NpgsqlDataReader reader = command.ExecuteReader())
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                idProducto = reader.GetInt32(0);
+            //                nombreProducto = reader.GetString(1);
+            //                precioProducto = reader.GetFloat(2);
+            //                nombreCategoria = reader.GetString(3);
+            //                nombreTipo = reader.GetString(4);
 
-                            Console.WriteLine(idProducto);
-                            Console.WriteLine(nombreProducto);
-                            Console.WriteLine(nombreCategoria);
-                            Console.WriteLine(nombreTipo);
-                            Console.WriteLine(precioProducto);
+            //                Console.WriteLine(idProducto);
+            //                Console.WriteLine(nombreProducto);
+            //                Console.WriteLine(nombreCategoria);
+            //                Console.WriteLine(nombreTipo);
+            //                Console.WriteLine(precioProducto);
 
-                            dgvMostrarDatos.Rows.Add(idProducto, nombreProducto, nombreTipo, precioProducto, nombreCategoria);
-                        }
-                    }
-                }
+            //                dgvMostrarDatos.Rows.Add(idProducto, nombreProducto, nombreTipo, precioProducto, nombreCategoria);
+            //            }
+            //        }
+            //    }
 
-                ObtenerNumeroElementos();
+            //    ObtenerNumeroElementos();
 
 
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
+            //}
+            //catch (ArgumentException ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Error: " + ex.Message);
+            //}
 
 
         }

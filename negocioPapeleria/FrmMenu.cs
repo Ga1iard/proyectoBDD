@@ -63,11 +63,6 @@ namespace negocioPapeleria
         {
             abrirFormHija(new FrmProductosExistentes());
         }
-        private void btnResumenVentas_Click(object sender, EventArgs e)
-        {
-            abrirFormHija(new FrmResumenVentas());
-        }
-
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;

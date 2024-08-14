@@ -32,7 +32,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnResumenVentas = new System.Windows.Forms.Button();
             this.btnConsultarProductos = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnRegistro = new System.Windows.Forms.Button();
@@ -50,7 +49,6 @@
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.btnResumenVentas);
             this.panel1.Controls.Add(this.btnConsultarProductos);
             this.panel1.Controls.Add(this.btnSalir);
             this.panel1.Controls.Add(this.btnRegistro);
@@ -66,38 +64,22 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Cambria", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.label2.Location = new System.Drawing.Point(13, 143);
+            this.label2.Location = new System.Drawing.Point(32, 130);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(136, 38);
+            this.label2.Size = new System.Drawing.Size(117, 38);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Elenita\'s";
+            this.label2.Text = "Maruja";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Cambria", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.label1.Location = new System.Drawing.Point(13, 93);
+            this.label1.Location = new System.Drawing.Point(35, 92);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 38);
+            this.label1.Size = new System.Drawing.Size(114, 38);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Papelería";
-            // 
-            // btnResumenVentas
-            // 
-            this.btnResumenVentas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnResumenVentas.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnResumenVentas.FlatAppearance.BorderSize = 0;
-            this.btnResumenVentas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnResumenVentas.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResumenVentas.Location = new System.Drawing.Point(0, 494);
-            this.btnResumenVentas.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnResumenVentas.Name = "btnResumenVentas";
-            this.btnResumenVentas.Size = new System.Drawing.Size(181, 60);
-            this.btnResumenVentas.TabIndex = 4;
-            this.btnResumenVentas.Text = "Resumen de Ventas";
-            this.btnResumenVentas.UseVisualStyleBackColor = false;
-            this.btnResumenVentas.Click += new System.EventHandler(this.btnResumenVentas_Click);
+            this.label1.Text = "Tienda";
             // 
             // btnConsultarProductos
             // 
@@ -106,7 +88,7 @@
             this.btnConsultarProductos.FlatAppearance.BorderSize = 0;
             this.btnConsultarProductos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConsultarProductos.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConsultarProductos.Location = new System.Drawing.Point(0, 407);
+            this.btnConsultarProductos.Location = new System.Drawing.Point(1, 476);
             this.btnConsultarProductos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnConsultarProductos.Name = "btnConsultarProductos";
             this.btnConsultarProductos.Size = new System.Drawing.Size(181, 60);
@@ -139,7 +121,7 @@
             this.btnRegistro.FlatAppearance.BorderSize = 0;
             this.btnRegistro.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistro.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistro.Location = new System.Drawing.Point(0, 236);
+            this.btnRegistro.Location = new System.Drawing.Point(0, 250);
             this.btnRegistro.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRegistro.Name = "btnRegistro";
             this.btnRegistro.Size = new System.Drawing.Size(181, 60);
@@ -155,7 +137,7 @@
             this.btnRegistrarVentas.FlatAppearance.BorderSize = 0;
             this.btnRegistrarVentas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrarVentas.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegistrarVentas.Location = new System.Drawing.Point(0, 321);
+            this.btnRegistrarVentas.Location = new System.Drawing.Point(1, 363);
             this.btnRegistrarVentas.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnRegistrarVentas.Name = "btnRegistrarVentas";
             this.btnRegistrarVentas.Size = new System.Drawing.Size(181, 60);
@@ -232,7 +214,6 @@
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Panel pnlBarra;
         private System.Windows.Forms.Panel pnlFondo;
-        private System.Windows.Forms.Button btnResumenVentas;
         private System.Windows.Forms.Button btnConsultarProductos;
         private System.Windows.Forms.Button btnMinimizar;
         private System.Windows.Forms.Label label1;
