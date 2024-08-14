@@ -249,19 +249,16 @@ namespace negocioPapeleria
                     {
                         idSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_producto"].Value.ToString();
                         idProductoSeleccionado = idSeleccionado;
-                        MessageBox.Show(idProductoSeleccionado);
                     }
                     else if (indiceBotones == 2) // Empleados
                     {
                         idSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_empleado"].Value.ToString();
                         idEmpleadoSeleccionado = idSeleccionado;
-                        MessageBox.Show(idEmpleadoSeleccionado);
                     }
                     else if (indiceBotones == 3) // Clientes
                     {
                         idSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_cliente"].Value.ToString();
                         idClienteSeleccionado = idSeleccionado;
-                        MessageBox.Show(idClienteSeleccionado);
                     }
 
                     // Mostrar el ID seleccionado en la consola para verificación
@@ -465,7 +462,7 @@ namespace negocioPapeleria
                 int filasAfectadas = comando.ExecuteNonQuery();
 
                 // Mostrar mensaje de éxito
-                MessageBox.Show($"{filasAfectadas} fila(s) afectada(s).", "Operación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Operación realizada con éxito", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

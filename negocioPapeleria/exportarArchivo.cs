@@ -27,8 +27,8 @@ namespace negocioPapeleria
                 PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(Path.Combine(ruta, nombre + " " + fecha + ".pdf"), FileMode.Create));
                 doc.Open();
 
-                // Agregar línea de "Papelería Elenita's"
-                Paragraph header = new Paragraph("Papelería Elenita's", FontFactory.GetFont(FontFactory.HELVETICA, 24, Font.BOLD));
+                // Agregar línea de "Tienda Maruja"
+                Paragraph header = new Paragraph("Tienda Maruja", FontFactory.GetFont(FontFactory.HELVETICA, 24, Font.BOLD));
                 doc.Add(header);
 
                 // Agregar mensaje personalizado
@@ -95,8 +95,8 @@ namespace negocioPapeleria
                     // Añadir una nueva hoja al archivo Excel
                     ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Datos");
 
-                    // Escribir "Papelería Elenita's"
-                    worksheet.Cells["A1"].Value = "Papelería Elenita's";
+                    // Escribir "Tienda Maruja"
+                    worksheet.Cells["A1"].Value = "Tienda Maruja";
 
                     // Escribir el mensaje personalizado
                     worksheet.Cells["A2"].Value = mensaje;

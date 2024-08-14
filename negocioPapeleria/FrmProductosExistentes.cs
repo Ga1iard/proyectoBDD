@@ -48,7 +48,6 @@ namespace negocioPapeleria
             PersonalizarDgvMostrarDatos();
             LlenarDgvMostrarDatos();
 
-            OcultarElementosPrecio();
             ObtenerNumeroElementos();
 
             fechaDeHoy = DateTime.Today;
@@ -114,43 +113,12 @@ namespace negocioPapeleria
         }
 
 
-        private void OcultarElementosPrecio()
-        {
-            lblPrecio.Visible = false;
-            lblPrecioMayor.Visible = false;
-            txtPrecio.Visible = false;
-            txtPrecioMayor.Visible = false;
-        }
 
 
         private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             ObtenerRangoIdTipo();
             LlenarCmbTipo();
-        }
-        private void btgFiltroPrecio_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (rbtPrecioEspecífico.Checked)
-            {
-                lblPrecio.Text = "Precio";
-                txtPrecio.Text = "";
-                lblPrecio.Visible = true;
-                txtPrecio.Visible = true;
-                lblPrecioMayor.Visible = false;
-                txtPrecioMayor.Visible = false;
-            }
-            if (rbtRangoPrecio.Checked)
-            {
-                lblPrecio.Text = "Desde";
-                txtPrecio.Text = "";
-                txtPrecioMayor.Text = "";
-                lblPrecio.Visible = true;
-                txtPrecio.Visible = true;
-                lblPrecioMayor.Visible = true;
-                txtPrecioMayor.Visible = true;
-            }
-
         }
 
 
@@ -167,9 +135,8 @@ namespace negocioPapeleria
             //Tabla Productos
             dgvMostrarDatos.Columns.Add("id_producto", "ID del Producto");
             dgvMostrarDatos.Columns.Add("nombre_producto", "Nombre del Producto");
-            dgvMostrarDatos.Columns.Add("precio_producto", "Precio Producto");
-
-            
+            dgvMostrarDatos.Columns.Add("precio_producto", "Precio");
+            dgvMostrarDatos.Columns.Add("Stock_producto", "Stock");
 
             dgvMostrarDatos.RowHeadersVisible = false;
 
@@ -183,9 +150,10 @@ namespace negocioPapeleria
             dgvMostrarDatos.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(93, 183, 185);
             dgvMostrarDatos.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
 
-            dgvMostrarDatos.Columns[0].Width = 186;
-            dgvMostrarDatos.Columns[1].Width = 368;
-            dgvMostrarDatos.Columns[2].Width = 208;
+            dgvMostrarDatos.Columns[0].Width = 140;
+            dgvMostrarDatos.Columns[1].Width = 328;
+            dgvMostrarDatos.Columns[2].Width = 134;
+            dgvMostrarDatos.Columns[3].Width = 134;
 
             dgvMostrarDatos.ReadOnly = true;
         }
@@ -387,16 +355,8 @@ namespace negocioPapeleria
 
         private void btnLimpiarFitros_Click(object sender, EventArgs e)
         {
-            OcultarElementosPrecio();
-
             cmbCategoria.SelectedIndex = -1;
             cmbTipo.SelectedIndex = -1;
-
-            rbtPrecioEspecífico.Checked = false;
-            rbtRangoPrecio.Checked = false;
-
-            txtPrecio.Text = "";
-            txtPrecioMayor.Text = "";
         }
 
         private void btnGenerarDocumento_Click(object sender, EventArgs e)
@@ -404,7 +364,7 @@ namespace negocioPapeleria
 
             string nombre = "Productos existentes";
             string numeroProductos = "El número de productos existentes es: " + numeroElementos.ToString();
-            string ruta = "C:\\Users\\jacqu\\OneDrive\\Escritorio\\DocumentosVentas";
+            string ruta = "C:\\Users\\Administrador\\Desktop\\sql";
 
             string mensajePreeliminar = "Tabla de productos existentes de";
             mensaje = "";
@@ -423,15 +383,6 @@ namespace negocioPapeleria
                 }
             }
 
-            if (rbtPrecioEspecífico.Checked)
-            {
-                mensajePreeliminar += " precio: " + txtPrecio.Text + " dólares";
-            }
-
-            if (rbtRangoPrecio.Checked)
-            {
-                mensajePreeliminar += " precio desde: " + txtPrecio.Text + " hasta: " + txtPrecioMayor.Text + " dólares";
-            }
 
             if (mensajePreeliminar == "Tabla de productos existentes de")
             {

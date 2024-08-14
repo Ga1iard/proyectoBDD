@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlVenta = new System.Windows.Forms.Panel();
+            this.txtNumeroFactura = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.txtUnidades = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbNombreCliente = new System.Windows.Forms.ComboBox();
@@ -46,38 +48,26 @@
             this.btnFacturas = new System.Windows.Forms.Button();
             this.btnRegistroVenta = new System.Windows.Forms.Button();
             this.pnlDatosVenta = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.pnlPresentacionDatosRegistrados = new System.Windows.Forms.Panel();
-            this.lblRegistroNombreEmpleado = new System.Windows.Forms.Label();
-            this.lblRegistroNombreCliente = new System.Windows.Forms.Label();
-            this.lblRegistroSucursal = new System.Windows.Forms.Label();
-            this.lblRegistroSubtotal = new System.Windows.Forms.Label();
-            this.lblRegistroProductos = new System.Windows.Forms.Label();
-            this.lblRegistroPrecios = new System.Windows.Forms.Label();
-            this.lblRegistroCantidad = new System.Windows.Forms.Label();
+            this.dgvProductosAgregados = new System.Windows.Forms.DataGridView();
             this.lblDolaresDelRegistro = new System.Windows.Forms.Label();
-            this.lblSubtotal = new System.Windows.Forms.Label();
             this.lblRegistroTotal = new System.Windows.Forms.Label();
             this.lblTotal = new System.Windows.Forms.Label();
-            this.lblCantidadProductos = new System.Windows.Forms.Label();
-            this.lblPrecioRegistro = new System.Windows.Forms.Label();
-            this.lblNombreProductoRegistro = new System.Windows.Forms.Label();
             this.lblProductosAgregados = new System.Windows.Forms.Label();
             this.btnRegistrarVentaProductos = new System.Windows.Forms.Button();
-            this.btnQuitarUltimoAgregado = new System.Windows.Forms.Button();
+            this.btnQuitarElemento = new System.Windows.Forms.Button();
             this.pnlFacturas = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvFacturas = new System.Windows.Forms.DataGridView();
             this.pnlVenta.SuspendLayout();
             this.pnlDatosVenta.SuspendLayout();
-            this.pnlPresentacionDatosRegistrados.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProductosAgregados)).BeginInit();
             this.pnlFacturas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlVenta
             // 
+            this.pnlVenta.Controls.Add(this.txtNumeroFactura);
+            this.pnlVenta.Controls.Add(this.label5);
             this.pnlVenta.Controls.Add(this.txtUnidades);
             this.pnlVenta.Controls.Add(this.label4);
             this.pnlVenta.Controls.Add(this.cmbNombreCliente);
@@ -98,13 +88,32 @@
             this.pnlVenta.TabIndex = 0;
             this.pnlVenta.Paint += new System.Windows.Forms.PaintEventHandler(this.CambiarColorPaneles_Paint);
             // 
+            // txtNumeroFactura
+            // 
+            this.txtNumeroFactura.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNumeroFactura.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumeroFactura.Location = new System.Drawing.Point(861, 70);
+            this.txtNumeroFactura.Name = "txtNumeroFactura";
+            this.txtNumeroFactura.Size = new System.Drawing.Size(149, 27);
+            this.txtNumeroFactura.TabIndex = 45;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(857, 47);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(126, 20);
+            this.label5.TabIndex = 44;
+            this.label5.Text = "Número Factura";
+            // 
             // txtUnidades
             // 
             this.txtUnidades.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUnidades.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUnidades.Location = new System.Drawing.Point(694, 70);
             this.txtUnidades.Name = "txtUnidades";
-            this.txtUnidades.Size = new System.Drawing.Size(316, 27);
+            this.txtUnidades.Size = new System.Drawing.Size(149, 27);
             this.txtUnidades.TabIndex = 43;
             // 
             // label4
@@ -134,6 +143,7 @@
             this.cmbNombreProducto.Name = "cmbNombreProducto";
             this.cmbNombreProducto.Size = new System.Drawing.Size(368, 28);
             this.cmbNombreProducto.TabIndex = 40;
+            this.cmbNombreProducto.SelectedIndexChanged += new System.EventHandler(this.cmbNombreProducto_SelectedIndexChanged);
             // 
             // cmbNombreEmpleado
             // 
@@ -200,9 +210,9 @@
             this.lblImpresionPrecioProducto.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblImpresionPrecioProducto.Location = new System.Drawing.Point(690, 145);
             this.lblImpresionPrecioProducto.Name = "lblImpresionPrecioProducto";
-            this.lblImpresionPrecioProducto.Size = new System.Drawing.Size(37, 20);
+            this.lblImpresionPrecioProducto.Size = new System.Drawing.Size(30, 20);
             this.lblImpresionPrecioProducto.TabIndex = 28;
-            this.lblImpresionPrecioProducto.Text = "lbl1";
+            this.lblImpresionPrecioProducto.Text = "1,5";
             // 
             // cmbSucursal
             // 
@@ -276,17 +286,10 @@
             // 
             // pnlDatosVenta
             // 
-            this.pnlDatosVenta.Controls.Add(this.label7);
-            this.pnlDatosVenta.Controls.Add(this.label6);
-            this.pnlDatosVenta.Controls.Add(this.label5);
-            this.pnlDatosVenta.Controls.Add(this.pnlPresentacionDatosRegistrados);
+            this.pnlDatosVenta.Controls.Add(this.dgvProductosAgregados);
             this.pnlDatosVenta.Controls.Add(this.lblDolaresDelRegistro);
-            this.pnlDatosVenta.Controls.Add(this.lblSubtotal);
             this.pnlDatosVenta.Controls.Add(this.lblRegistroTotal);
             this.pnlDatosVenta.Controls.Add(this.lblTotal);
-            this.pnlDatosVenta.Controls.Add(this.lblCantidadProductos);
-            this.pnlDatosVenta.Controls.Add(this.lblPrecioRegistro);
-            this.pnlDatosVenta.Controls.Add(this.lblNombreProductoRegistro);
             this.pnlDatosVenta.Controls.Add(this.lblProductosAgregados);
             this.pnlDatosVenta.Location = new System.Drawing.Point(34, 302);
             this.pnlDatosVenta.Name = "pnlDatosVenta";
@@ -294,120 +297,17 @@
             this.pnlDatosVenta.TabIndex = 25;
             this.pnlDatosVenta.Paint += new System.Windows.Forms.PaintEventHandler(this.CambiarColorPaneles_Paint);
             // 
-            // label7
+            // dgvProductosAgregados
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(820, 56);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(170, 20);
-            this.label7.TabIndex = 42;
-            this.label7.Text = "Nombre del Empleado";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(626, 56);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(149, 20);
-            this.label6.TabIndex = 39;
-            this.label6.Text = "Nombre del Cliente";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(501, 56);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 20);
-            this.label5.TabIndex = 41;
-            this.label5.Text = "Sucursal";
-            // 
-            // pnlPresentacionDatosRegistrados
-            // 
-            this.pnlPresentacionDatosRegistrados.AutoScroll = true;
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroNombreEmpleado);
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroNombreCliente);
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroSucursal);
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroSubtotal);
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroProductos);
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroPrecios);
-            this.pnlPresentacionDatosRegistrados.Controls.Add(this.lblRegistroCantidad);
-            this.pnlPresentacionDatosRegistrados.Location = new System.Drawing.Point(19, 79);
-            this.pnlPresentacionDatosRegistrados.Name = "pnlPresentacionDatosRegistrados";
-            this.pnlPresentacionDatosRegistrados.Size = new System.Drawing.Size(991, 172);
-            this.pnlPresentacionDatosRegistrados.TabIndex = 40;
-            // 
-            // lblRegistroNombreEmpleado
-            // 
-            this.lblRegistroNombreEmpleado.AutoSize = true;
-            this.lblRegistroNombreEmpleado.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroNombreEmpleado.Location = new System.Drawing.Point(801, 9);
-            this.lblRegistroNombreEmpleado.Name = "lblRegistroNombreEmpleado";
-            this.lblRegistroNombreEmpleado.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroNombreEmpleado.TabIndex = 41;
-            this.lblRegistroNombreEmpleado.Text = "lbl1";
-            // 
-            // lblRegistroNombreCliente
-            // 
-            this.lblRegistroNombreCliente.AutoSize = true;
-            this.lblRegistroNombreCliente.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroNombreCliente.Location = new System.Drawing.Point(607, 9);
-            this.lblRegistroNombreCliente.Name = "lblRegistroNombreCliente";
-            this.lblRegistroNombreCliente.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroNombreCliente.TabIndex = 40;
-            this.lblRegistroNombreCliente.Text = "lbl1";
-            // 
-            // lblRegistroSucursal
-            // 
-            this.lblRegistroSucursal.AutoSize = true;
-            this.lblRegistroSucursal.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroSucursal.Location = new System.Drawing.Point(482, 9);
-            this.lblRegistroSucursal.Name = "lblRegistroSucursal";
-            this.lblRegistroSucursal.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroSucursal.TabIndex = 39;
-            this.lblRegistroSucursal.Text = "lbl1";
-            // 
-            // lblRegistroSubtotal
-            // 
-            this.lblRegistroSubtotal.AutoSize = true;
-            this.lblRegistroSubtotal.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroSubtotal.Location = new System.Drawing.Point(370, 9);
-            this.lblRegistroSubtotal.Name = "lblRegistroSubtotal";
-            this.lblRegistroSubtotal.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroSubtotal.TabIndex = 38;
-            this.lblRegistroSubtotal.Text = "lbl1";
-            // 
-            // lblRegistroProductos
-            // 
-            this.lblRegistroProductos.AutoSize = true;
-            this.lblRegistroProductos.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroProductos.Location = new System.Drawing.Point(2, 9);
-            this.lblRegistroProductos.Name = "lblRegistroProductos";
-            this.lblRegistroProductos.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroProductos.TabIndex = 29;
-            this.lblRegistroProductos.Text = "lbl1";
-            // 
-            // lblRegistroPrecios
-            // 
-            this.lblRegistroPrecios.AutoSize = true;
-            this.lblRegistroPrecios.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroPrecios.Location = new System.Drawing.Point(177, 9);
-            this.lblRegistroPrecios.Name = "lblRegistroPrecios";
-            this.lblRegistroPrecios.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroPrecios.TabIndex = 30;
-            this.lblRegistroPrecios.Text = "lbl1";
-            // 
-            // lblRegistroCantidad
-            // 
-            this.lblRegistroCantidad.AutoSize = true;
-            this.lblRegistroCantidad.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegistroCantidad.Location = new System.Drawing.Point(285, 9);
-            this.lblRegistroCantidad.Name = "lblRegistroCantidad";
-            this.lblRegistroCantidad.Size = new System.Drawing.Size(37, 20);
-            this.lblRegistroCantidad.TabIndex = 34;
-            this.lblRegistroCantidad.Text = "lbl1";
+            this.dgvProductosAgregados.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(247)))), ((int)(((byte)(243)))));
+            this.dgvProductosAgregados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProductosAgregados.Location = new System.Drawing.Point(23, 51);
+            this.dgvProductosAgregados.Name = "dgvProductosAgregados";
+            this.dgvProductosAgregados.RowHeadersWidth = 51;
+            this.dgvProductosAgregados.RowTemplate.Height = 24;
+            this.dgvProductosAgregados.Size = new System.Drawing.Size(987, 187);
+            this.dgvProductosAgregados.TabIndex = 43;
+            this.dgvProductosAgregados.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProductosAgregados_CellClick);
             // 
             // lblDolaresDelRegistro
             // 
@@ -418,16 +318,6 @@
             this.lblDolaresDelRegistro.Size = new System.Drawing.Size(64, 20);
             this.lblDolaresDelRegistro.TabIndex = 39;
             this.lblDolaresDelRegistro.Text = "Dólares";
-            // 
-            // lblSubtotal
-            // 
-            this.lblSubtotal.AutoSize = true;
-            this.lblSubtotal.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSubtotal.Location = new System.Drawing.Point(386, 56);
-            this.lblSubtotal.Name = "lblSubtotal";
-            this.lblSubtotal.Size = new System.Drawing.Size(53, 20);
-            this.lblSubtotal.TabIndex = 37;
-            this.lblSubtotal.Text = "Sub. T.";
             // 
             // lblRegistroTotal
             // 
@@ -448,36 +338,6 @@
             this.lblTotal.Size = new System.Drawing.Size(54, 20);
             this.lblTotal.TabIndex = 35;
             this.lblTotal.Text = "Total:";
-            // 
-            // lblCantidadProductos
-            // 
-            this.lblCantidadProductos.AutoSize = true;
-            this.lblCantidadProductos.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCantidadProductos.Location = new System.Drawing.Point(304, 56);
-            this.lblCantidadProductos.Name = "lblCantidadProductos";
-            this.lblCantidadProductos.Size = new System.Drawing.Size(45, 20);
-            this.lblCantidadProductos.TabIndex = 33;
-            this.lblCantidadProductos.Text = "Cant.";
-            // 
-            // lblPrecioRegistro
-            // 
-            this.lblPrecioRegistro.AutoSize = true;
-            this.lblPrecioRegistro.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrecioRegistro.Location = new System.Drawing.Point(196, 56);
-            this.lblPrecioRegistro.Name = "lblPrecioRegistro";
-            this.lblPrecioRegistro.Size = new System.Drawing.Size(63, 20);
-            this.lblPrecioRegistro.TabIndex = 32;
-            this.lblPrecioRegistro.Text = "Precios";
-            // 
-            // lblNombreProductoRegistro
-            // 
-            this.lblNombreProductoRegistro.AutoSize = true;
-            this.lblNombreProductoRegistro.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreProductoRegistro.Location = new System.Drawing.Point(19, 56);
-            this.lblNombreProductoRegistro.Name = "lblNombreProductoRegistro";
-            this.lblNombreProductoRegistro.Size = new System.Drawing.Size(139, 20);
-            this.lblNombreProductoRegistro.TabIndex = 31;
-            this.lblNombreProductoRegistro.Text = "Nombre Producto";
             // 
             // lblProductosAgregados
             // 
@@ -505,41 +365,43 @@
             this.btnRegistrarVentaProductos.UseVisualStyleBackColor = false;
             this.btnRegistrarVentaProductos.Click += new System.EventHandler(this.btnRegistrarVentaProductos_Click);
             // 
-            // btnQuitarUltimoAgregado
+            // btnQuitarElemento
             // 
-            this.btnQuitarUltimoAgregado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
-            this.btnQuitarUltimoAgregado.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnQuitarUltimoAgregado.FlatAppearance.BorderSize = 0;
-            this.btnQuitarUltimoAgregado.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnQuitarUltimoAgregado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuitarUltimoAgregado.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitarUltimoAgregado.Location = new System.Drawing.Point(34, 593);
-            this.btnQuitarUltimoAgregado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnQuitarUltimoAgregado.Name = "btnQuitarUltimoAgregado";
-            this.btnQuitarUltimoAgregado.Size = new System.Drawing.Size(341, 57);
-            this.btnQuitarUltimoAgregado.TabIndex = 28;
-            this.btnQuitarUltimoAgregado.Text = "Quitar Último Producto Agregado";
-            this.btnQuitarUltimoAgregado.UseVisualStyleBackColor = false;
-            this.btnQuitarUltimoAgregado.Click += new System.EventHandler(this.btnQuitarUltimoAgregado_Click);
+            this.btnQuitarElemento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(209)))), ((int)(((byte)(167)))));
+            this.btnQuitarElemento.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnQuitarElemento.FlatAppearance.BorderSize = 0;
+            this.btnQuitarElemento.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnQuitarElemento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitarElemento.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitarElemento.Location = new System.Drawing.Point(34, 593);
+            this.btnQuitarElemento.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnQuitarElemento.Name = "btnQuitarElemento";
+            this.btnQuitarElemento.Size = new System.Drawing.Size(341, 57);
+            this.btnQuitarElemento.TabIndex = 28;
+            this.btnQuitarElemento.Text = "Quitar Elemento";
+            this.btnQuitarElemento.UseVisualStyleBackColor = false;
+            this.btnQuitarElemento.Click += new System.EventHandler(this.btnQuitarElemento_Click);
             // 
             // pnlFacturas
             // 
-            this.pnlFacturas.Controls.Add(this.dataGridView1);
+            this.pnlFacturas.Controls.Add(this.dgvFacturas);
             this.pnlFacturas.Location = new System.Drawing.Point(34, 45);
             this.pnlFacturas.Name = "pnlFacturas";
             this.pnlFacturas.Size = new System.Drawing.Size(1035, 605);
             this.pnlFacturas.TabIndex = 44;
             this.pnlFacturas.Paint += new System.Windows.Forms.PaintEventHandler(this.CambiarColorPaneles_Paint);
             // 
-            // dataGridView1
+            // dgvFacturas
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 16);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(991, 569);
-            this.dataGridView1.TabIndex = 0;
+            this.dgvFacturas.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(247)))), ((int)(((byte)(243)))));
+            this.dgvFacturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFacturas.Location = new System.Drawing.Point(23, 16);
+            this.dgvFacturas.Name = "dgvFacturas";
+            this.dgvFacturas.RowHeadersWidth = 51;
+            this.dgvFacturas.RowTemplate.Height = 24;
+            this.dgvFacturas.Size = new System.Drawing.Size(991, 569);
+            this.dgvFacturas.TabIndex = 0;
+            this.dgvFacturas.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFacturas_CellClick);
             // 
             // FrmRegistrarVentas
             // 
@@ -550,7 +412,7 @@
             this.Controls.Add(this.pnlVenta);
             this.Controls.Add(this.btnRegistroVenta);
             this.Controls.Add(this.btnFacturas);
-            this.Controls.Add(this.btnQuitarUltimoAgregado);
+            this.Controls.Add(this.btnQuitarElemento);
             this.Controls.Add(this.btnRegistrarVentaProductos);
             this.Controls.Add(this.pnlDatosVenta);
             this.Controls.Add(this.pnlFacturas);
@@ -562,10 +424,9 @@
             this.pnlVenta.PerformLayout();
             this.pnlDatosVenta.ResumeLayout(false);
             this.pnlDatosVenta.PerformLayout();
-            this.pnlPresentacionDatosRegistrados.ResumeLayout(false);
-            this.pnlPresentacionDatosRegistrados.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProductosAgregados)).EndInit();
             this.pnlFacturas.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFacturas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -581,26 +442,11 @@
         private System.Windows.Forms.Label lblImpresionPrecioProducto;
         private System.Windows.Forms.Label lblPrecioProducto;
         private System.Windows.Forms.Label lblProductosAgregados;
-        private System.Windows.Forms.Button btnQuitarUltimoAgregado;
-        private System.Windows.Forms.Label lblRegistroPrecios;
-        private System.Windows.Forms.Label lblRegistroProductos;
+        private System.Windows.Forms.Button btnQuitarElemento;
         private System.Windows.Forms.Label lblDolares;
-        private System.Windows.Forms.Label lblPrecioRegistro;
-        private System.Windows.Forms.Label lblNombreProductoRegistro;
         private System.Windows.Forms.Label lblRegistroTotal;
         private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.Label lblRegistroCantidad;
-        private System.Windows.Forms.Label lblCantidadProductos;
-        private System.Windows.Forms.Label lblSubtotal;
-        private System.Windows.Forms.Label lblRegistroSubtotal;
         private System.Windows.Forms.Label lblDolaresDelRegistro;
-        private System.Windows.Forms.Panel pnlPresentacionDatosRegistrados;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label lblRegistroNombreEmpleado;
-        private System.Windows.Forms.Label lblRegistroNombreCliente;
-        private System.Windows.Forms.Label lblRegistroSucursal;
         private System.Windows.Forms.ComboBox cmbNombreCliente;
         private System.Windows.Forms.ComboBox cmbNombreProducto;
         private System.Windows.Forms.ComboBox cmbNombreEmpleado;
@@ -612,6 +458,9 @@
         private System.Windows.Forms.TextBox txtUnidades;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel pnlFacturas;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvFacturas;
+        private System.Windows.Forms.DataGridView dgvProductosAgregados;
+        private System.Windows.Forms.TextBox txtNumeroFactura;
+        private System.Windows.Forms.Label label5;
     }
 }

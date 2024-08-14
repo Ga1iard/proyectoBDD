@@ -17,12 +17,32 @@ namespace negocioPapeleria
 {
     public partial class FrmRegistrarVentas : Form
     {
-    
-        public static List<string> listaNombresProductos = new List<string>();
-        public static List<string> listaTiposProductos = new List<string>();
-        public static List<float> listaPrecios = new List<float>();
-        public static List<int> listaCantidadProductos = new List<int>();
-        
+
+        private bool productoAgregadoCorrectamente = false;
+
+        private string nombreProducto = "";
+        private string nombreEmpleado = "";
+        private string nombreCliente = "";
+        private string sucursal = "";
+        private string unidades = "";
+        private string numeroFactura = "";
+        private string idSucursal = "";
+
+        private string idEmpleado = "";
+        private string idProducto = "";
+        private string idCliente = "";
+
+        private int lineaDetalles = 0;
+
+        private static List<string> listaIDsProductos = new List<string>();
+        private static List<string> listaIDsEmpleados = new List<string>();
+        private static List<string> listaIDsClientes = new List<string>();
+        private static List<string> listaPrecios = new List<string>();
+        private static List<string> listaSubtotales = new List<string>();
+        private static List<string> listaUnidades = new List<string>();
+
+        private string nombreProductoSeleccionado = "";
+
         conexionSQLServer conn;
 
         public FrmRegistrarVentas()
@@ -31,11 +51,33 @@ namespace negocioPapeleria
 
             conn = new conexionSQLServer();
 
+            LlenarCMBCliente();
+            LlenarCMBEmpleado();
+            LlenarCMBProducto();
+            LlenarCMBSucursal();
+
+            ObtenerLineaDetalles();
+
             pnlFacturas.Visible = false;
 
+            lblImpresionPrecioProducto.Visible = false;
+            lblRegistroTotal.Visible = false;
 
-            //dgvMostrarDatos.CellMouseMove += dgvMostrarDatos_CellMouseMove;
-            //PersonalizarDgvMostrarDatos();
+            CrearDGVProductosAgregados();
+            PersonalizarDataGridView(dgvProductosAgregados);
+
+            CrearDGVFacturas();
+            PersonalizarDataGridView(dgvFacturas);
+
+            dgvProductosAgregados.CellMouseMove += new DataGridViewCellMouseEventHandler(DataGridView_CellMouseMove);
+            dgvProductosAgregados.CellMouseLeave += new DataGridViewCellEventHandler(DataGridView_CellMouseLeave);
+
+
+            dgvFacturas.CellMouseMove += new DataGridViewCellMouseEventHandler(DataGridView_CellMouseMove);
+            dgvFacturas.CellMouseLeave += new DataGridViewCellEventHandler(DataGridView_CellMouseLeave);
+
+
+
 
         }
 
@@ -132,7 +174,7 @@ namespace negocioPapeleria
             }
         }
 
-        // Para llenar el ComboBox de Sucursales
+        // Llenar el ComboBox de Sucursales
         private void LlenarCMBSucursal()
         {
             string consultaSucursal = "SELECT ciudad FROM Sucursales";
@@ -163,72 +205,229 @@ namespace negocioPapeleria
             }
         }
 
-        private void ConsultarPrecioProducto()
+        private void ObtenerPrecioProducto()
         {
-            //string consultaPrecio = $"SELECT precio_producto FROM productos WHERE nombre_producto = '{nombreProducto}' AND id_tipo = {idTipo}";
+            string consultaPrecio = "select precio_unit from Productos";
 
-            //try
-            //{
-            //    conn.AbrirConexion();
+            using (SqlCommand comando = new SqlCommand(consultaPrecio, conn.GetConnection()))
+            {
+                // Añade el parámetro del nombre del producto a la consulta
+                comando.Parameters.AddWithValue("@nombreProducto", nombreProducto);
 
-            //    using (NpgsqlCommand command = new NpgsqlCommand(consultaPrecio, conn.GetConnection()))
-            //    {
-            //        object precio = command.ExecuteScalar();
-            //        precioProducto = Convert.ToString(precio);
-            //        Console.Write("precioProducto: " + precioProducto);
-            //    }
+                try
+                {
+                    // Abre la conexión
+                    conn.AbrirConexion();
 
-            //    hayNombreProducto = true;
-            //    Console.WriteLine("Si hay nombre producto " + hayNombreProducto);
-            //}
-            //catch (Exception)
-            //{
-            //    hayNombreProducto = false;
-            //    Console.WriteLine("No hay nombre producto " + hayNombreProducto);
+                    // Ejecuta la consulta y obtiene el resultado
+                    object resultado = comando.ExecuteScalar();
 
-            //}
-
-            //Console.WriteLine(consultaPrecio);
-        }
-        private void ConsultarIdVenta()
-        {
-            //conn.AbrirConexion();
-
-            //string consultaVenta = "SELECT id_venta FROM ventas ORDER BY id_venta DESC LIMIT 1";
-
-            //using (NpgsqlCommand command = new NpgsqlCommand(consultaVenta, conn.GetConnection()))
-            //{
-            //    object idVenta = command.ExecuteScalar();
-            //    idVentaSeleccionada = idVenta.ToString();
-            //    Console.Write("idVentaSeleccionada: " + idVentaSeleccionada);
-            //}
-        }
-        private void ConsultarIdProducto()
-        {
-            //conn.AbrirConexion();
-
-            //string consultaVenta = $"SELECT id_producto FROM productos WHERE nombre_producto = '{nombreProducto}' AND id_tipo = {idTipo}";
-
-            //using (NpgsqlCommand command = new NpgsqlCommand(consultaVenta, conn.GetConnection()))
-            //{
-            //    try
-            //    {
-            //        object idProductoObtenido = command.ExecuteScalar();
-            //        idProducto = idProductoObtenido.ToString();
-            //        Console.Write("idProducto: " + idProducto);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine("Error en consultar ID producto " + ex);
-            //    }
-            //}
+                    if (resultado != null)
+                    {
+                        // Convierte el resultado a decimal y luego a string
+                        decimal precioProducto = Convert.ToDecimal(resultado);
+                        string precioFormateado = precioProducto.ToString().Replace('.', ',');
+                        lblImpresionPrecioProducto.Text = precioFormateado;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Producto no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al obtener el precio del producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Cierra la conexión
+                    conn.CerrarConexion();
+                }
+            }
         }
 
-
-
-        private void ObtenerDatosDelMenu(int categoria)
+        private void ObtenerLineaDetalles()
         {
-            
+            string obtenerLineas = "select COUNT(*) from Detalles";
+
+            using (SqlCommand comando = new SqlCommand(obtenerLineas, conn.GetConnection()))
+            {
+                try
+                {
+                    // Abre la conexión
+                    conn.AbrirConexion();
+
+                    // Ejecuta la consulta y obtiene el resultado
+                    object resultado = comando.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        // Convierte el resultado a entero y muestra el número de líneas
+                        lineaDetalles = Convert.ToInt32(resultado);
+                        Console.WriteLine($"Número de líneas en Detalles: {lineaDetalles}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No se encontraron registros en la tabla Detalles.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al obtener el número de detalles: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Cierra la conexión
+                    conn.CerrarConexion();
+                }
+            }
+        }
+
+        private void ObtenerIDEmpleado()
+        {
+            string consultaID = $"select id_empleado from Empleados where nombre = @nombreEmpleado";
+
+            using (SqlCommand comando = new SqlCommand(consultaID, conn.GetConnection()))
+            {
+                comando.Parameters.AddWithValue("@nombreEmpleado", nombreEmpleado);
+
+                try
+                {
+                    conn.AbrirConexion();
+                    object resultado = comando.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        idEmpleado = resultado.ToString();
+                        Console.WriteLine($"ID Empleado: {idEmpleado}"); // Para verificar el ID obtenido
+                    }
+                    else
+                    {
+                        MessageBox.Show("Empleado no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al obtener el ID del empleado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.CerrarConexion();
+                }
+            }
+        }
+
+        private void ObtenerIDProducto()
+        {
+            string consultaID = $"select id_producto from Productos where nombre_prod = @nombreProducto";
+
+            using (SqlCommand comando = new SqlCommand(consultaID, conn.GetConnection()))
+            {
+                comando.Parameters.AddWithValue("@nombreProducto", nombreProducto);
+
+                try
+                {
+                    conn.AbrirConexion();
+                    object resultado = comando.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        idProducto = resultado.ToString();
+                        Console.WriteLine($"ID Producto: {idProducto}"); // Para verificar el ID obtenido
+                    }
+                    else
+                    {
+                        MessageBox.Show("Producto no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al obtener el ID del producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.CerrarConexion();
+                }
+            }
+        }
+
+        private void ObtenerIDCliente()
+        {
+
+            string nombre = "";
+            string apellido = "";
+
+            string[] partes = nombreCliente.Split(' ');
+
+            if (partes.Length == 2)
+            {
+                nombre = partes[0];    // Primer parte es el nombre
+                apellido = partes[1];  // Segunda parte es el apellido
+            }
+            else
+            {
+                MessageBox.Show("Nombre del cliente no está en el formato esperado (Nombre Apellido).", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string consultaID = $"select id_cliente from Clientes where nombre_cli = @nombre AND apellido_cli = @apellido";
+
+            using (SqlCommand comando = new SqlCommand(consultaID, conn.GetConnection()))
+            {
+                comando.Parameters.AddWithValue("@nombre", nombre);
+                comando.Parameters.AddWithValue("@apellido", apellido);
+
+                try
+                {
+                    conn.AbrirConexion();
+                    object resultado = comando.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        idCliente = resultado.ToString();
+                        Console.WriteLine($"ID Cliente: {idCliente}"); // Para verificar el ID obtenido
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cliente no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al obtener el ID del cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    conn.CerrarConexion();
+                }
+            }
+
+        }
+
+
+
+        private void InicializarDatos()
+        {
+            nombreProducto = cmbNombreProducto.Text;
+            nombreEmpleado = cmbNombreEmpleado.Text;
+            nombreCliente = cmbNombreCliente.Text;
+            sucursal = cmbSucursal.Text;
+            unidades = txtUnidades.Text;
+            numeroFactura = txtNumeroFactura.Text;
+        }
+
+        private void ObtenerIDSucursal(string sucursal)
+        {
+            if (sucursal == "Quito")
+                idSucursal = "1";
+            if (sucursal == "Guayaquil")
+                idSucursal = "2";
+        }
+
+        private void cmbNombreProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ObtenerPrecioProducto();
+            lblImpresionPrecioProducto.Visible = true;
         }
 
 
@@ -238,148 +437,182 @@ namespace negocioPapeleria
          *  -------------------------------------------------------------------------
          */
 
-        //private void PersonalizarDgvMostrarDatos()
-        //{
-        //    //Tabla Productos
-        //    dgvMostrarDatos.Columns.Add("id_venta", "ID Venta");
-        //    dgvMostrarDatos.Columns.Add("nombre_producto", "Nombre Producto");
-        //    dgvMostrarDatos.Columns.Add("cantidad", "Cantidad");
-        //    dgvMostrarDatos.Columns.Add("fecha_venta", "Fecha Venta");
+        private void CrearDGVProductosAgregados()
+        {
+            dgvProductosAgregados.Columns.Add("nombre_producto", "Nombre Producto");
+            dgvProductosAgregados.Columns.Add("precio_producto", "Precio Producto");
+            dgvProductosAgregados.Columns.Add("cantidad_producto", "Cantidad");
+            dgvProductosAgregados.Columns.Add("subtotal", "Subtotal");
+            dgvProductosAgregados.Columns.Add("sucursal", "Sucursal");
+            dgvProductosAgregados.Columns.Add("numero_factura", "Factura");
+            dgvProductosAgregados.Columns.Add("nombre_cliente", "Nombre Cliente");
+            dgvProductosAgregados.Columns.Add("nombre_empleado", "Nombre Empleado");
 
-        //    dgvMostrarDatos.RowHeadersVisible = false;
+            dgvProductosAgregados.Columns[0].Width = 104;
+            dgvProductosAgregados.Columns[1].Width = 80;
+            dgvProductosAgregados.Columns[2].Width = 80;
+            dgvProductosAgregados.Columns[3].Width = 80;
+            dgvProductosAgregados.Columns[4].Width = 80;
+            dgvProductosAgregados.Columns[5].Width = 80;
+            dgvProductosAgregados.Columns[6].Width = 104;
+            dgvProductosAgregados.Columns[7].Width = 104;
 
-        //    dgvMostrarDatos.ColumnHeadersDefaultCellStyle.Font = new Font("Cambria", 9);
-        //    dgvMostrarDatos.DefaultCellStyle.Font = new Font("Cambria", 9);
+            dgvProductosAgregados.AllowUserToAddRows = false;
+        }
 
-        //    dgvMostrarDatos.DefaultCellStyle.BackColor = Color.FromArgb(214, 215, 217);
-        //    dgvMostrarDatos.DefaultCellStyle.ForeColor = Color.Black;
+        private void CrearDGVFacturas()
+        {
+            dgvFacturas.Columns.Add("id_factura", "ID");
+            dgvFacturas.Columns.Add("nombre_producto_factura", "Nombre Producto");
+            dgvFacturas.Columns.Add("precio_unitario", "Precio Unitario");
+            dgvFacturas.Columns.Add("cantidad_factura", "Cantidad");
+            dgvFacturas.Columns.Add("precio_total", "Precio Total");
+            dgvFacturas.Columns.Add("fecha", "Fecha");
+            dgvFacturas.Columns.Add("sucursal_factura", "Sucursal");
+            dgvFacturas.Columns.Add("cliente_factura", "Cliente");
+            dgvFacturas.Columns.Add("empleado_factura", "Empleado");
 
-        //    dgvMostrarDatos.EnableHeadersVisualStyles = false;
-        //    dgvMostrarDatos.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(93, 183, 185);
-        //    dgvMostrarDatos.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvFacturas.Columns[0].Width = 60;
+            dgvFacturas.Columns[1].Width = 97;
+            dgvFacturas.Columns[2].Width = 70;
+            dgvFacturas.Columns[3].Width = 70;
+            dgvFacturas.Columns[4].Width = 70;
+            dgvFacturas.Columns[5].Width = 80;
+            dgvFacturas.Columns[6].Width = 80;
+            dgvFacturas.Columns[7].Width = 97;
+            dgvFacturas.Columns[8].Width = 97;
+        }
 
-        //    dgvMostrarDatos.Columns[0].Width = 77;
-        //    dgvMostrarDatos.Columns[1].Width = 205;
-        //    dgvMostrarDatos.Columns[2].Width = 63;
-        //    dgvMostrarDatos.Columns[3].Width = 94;
+        private void PersonalizarDataGridView(DataGridView dgv)
+        {
+            // Ocultar encabezados de fila
+            dgv.RowHeadersVisible = false;
 
-        //    dgvMostrarDatos.ReadOnly = true;
-        //}
+            // Configurar la fuente para encabezados y celdas
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Cambria", 9);
+            dgv.DefaultCellStyle.Font = new Font("Cambria", 9);
 
-        //private void LlenarDgvMostrarDatos()
-        //{
-        //    dgvMostrarDatos.Rows.Clear();
+            // Configurar colores de fondo y texto de las celdas
+            dgv.DefaultCellStyle.BackColor = Color.FromArgb(214, 215, 217);
+            dgv.DefaultCellStyle.ForeColor = Color.Black;
 
-        //    conn.AbrirConexion();
+            // Configurar colores de encabezado de columna
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(93, 183, 185);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
 
-        //    string obtenerDatosProducto = $"SELECT v.id_venta, p.nombre_producto, dv.cantidad, v.fecha_venta " +
-        //        $"FROM ventas v " +
-        //        $"INNER JOIN detalle_ventas dv ON v.id_venta = dv.id_venta " +
-        //        $"INNER JOIN productos p ON dv.id_producto = p.id_producto " +
-        //        $"INNER JOIN categorias c ON p.id_categoria = c.id_categoria " +
-        //        $"WHERE c.id_categoria = {categoriaElegida} ORDER BY fecha_venta DESC";
+            // Hacer el DataGridView de solo lectura
+            dgv.ReadOnly = true;
+        }
 
-        //    int idVenta = 0;
-        //    string nombreProducto = "";
-        //    int cantidad = 0;
-        //    DateTime fechaVenta;
 
-        //    try
-        //    {
-        //        using (NpgsqlCommand command = new NpgsqlCommand(obtenerDatosProducto, conn.GetConnection()))
-        //        {
-        //            using (NpgsqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    idVenta = reader.GetInt32(0);
-        //                    nombreProducto = reader.GetString(1);
-        //                    cantidad = reader.GetInt32(2);
-        //                    fechaVenta = reader.GetDateTime(3);
 
-        //                    Console.WriteLine(idVenta);
-        //                    Console.WriteLine(nombreProducto);
-        //                    Console.WriteLine(cantidad);
-        //                    Console.WriteLine(fechaVenta);
+        private void DataGridView_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (dgv == null) return;
 
-        //                    string fechaFormateada = fechaVenta.ToString("yyyy-MM-dd");
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                dgv.Cursor = Cursors.Hand;
+                dgv.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(217, 237, 237);
+            }
+            else
+            {
+                dgv.Cursor = Cursors.Default;
+                if (e.RowIndex >= 0)
+                {
+                    dgv.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(214, 215, 217);
+                }
+            }
+        }
 
-        //                    dgvMostrarDatos.Rows.Add(idVenta, nombreProducto, cantidad, fechaFormateada);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Console.WriteLine("Ejecución finalizada");
-        //    }
-        //}
+        private void DataGridView_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (dgv == null) return;
 
-        //private void dgvMostrarDatos_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
-        //{
-        //    if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
-        //    {
-        //        dgvMostrarDatos.Cursor = Cursors.Hand;
-        //        dgvMostrarDatos.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(217, 237, 237);
-        //    }
-        //    else
-        //    {
-        //        dgvMostrarDatos.Cursor = Cursors.Default;
-        //        // Verifica si e.RowIndex es mayor o igual a 0 antes de cambiar el estilo de la fila
-        //        if (e.RowIndex >= 0)
-        //        {
-        //            dgvMostrarDatos.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(214, 215, 217);
-        //        }
-        //    }
-        //}
+            if (e.RowIndex >= 0)
+            {
+                dgv.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(214, 215, 217);
+            }
+        }
 
-        //private void dgvMostrarDatos_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.RowIndex >= 0)
-        //    {
-        //        dgvMostrarDatos.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(214, 215, 217);
-        //    }
-        //}
 
-        //private void dgvMostrarDatos_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (e.RowIndex >= 0)
-        //        {
-        //            string idVenta = dgvMostrarDatos.Rows[e.RowIndex].Cells["id_venta"].Value.ToString();
-        //            string nombreProductoSeleccionado = dgvMostrarDatos.Rows[e.RowIndex].Cells["nombre_producto"].Value.ToString();
-        //            string cantidadSeleccionada = dgvMostrarDatos.Rows[e.RowIndex].Cells["cantidad"].Value.ToString();
 
-        //            dgvMostrarDatos[e.ColumnIndex, e.RowIndex].Tag = new { idVenta, nombreProductoSeleccionado, cantidadSeleccionada };
-        //            idVentaSeleccionada = idVenta;
-        //            nombreProducto = nombreProductoSeleccionado;
-        //            cantidadProducto = int.Parse(cantidadSeleccionada);
+        // dgvProductosAgregados (índice 1)
+        private void dgvProductosAgregados_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView_CellClick(sender, e, 1);
+        }
 
-        //            string consultaIdTipo = $"SELECT p.id_tipo FROM detalle_ventas dv " +
-        //            $"INNER JOIN productos p ON dv.id_producto = p.id_producto " +
-        //            $"WHERE dv.id_venta = {idVentaSeleccionada} AND p.nombre_producto = '{nombreProducto}' AND dv.cantidad = {cantidadProducto}";
+        // dgvFacturas (índice 2)
+        private void dgvFacturas_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView_CellClick(sender, e, 2);
+        }
 
-        //            using (NpgsqlCommand command = new NpgsqlCommand(consultaIdTipo, conn.GetConnection()))
-        //            {
-        //                object idTipoSeleccionado = command.ExecuteScalar();
-        //                string idTipoTemporal = idTipoSeleccionado.ToString();
-        //                idTipo = int.Parse(idTipoTemporal);
-        //                Console.Write("idTipo: " + idTipo);
-        //            }
 
-        //            Console.WriteLine($"ID Venta: {idVentaSeleccionada}, Producto: {nombreProducto}, Cantidad: {cantidadProducto}, ID Tipo: {idTipo}");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
+        private void DataGridView_CellClick(object sender, DataGridViewCellEventArgs e, int indiceBotones)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (dgv == null) return;
+
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    if (indiceBotones == 1) // Nombre del Producto
+                    {
+                        nombreProductoSeleccionado = dgv.Rows[e.RowIndex].Cells["nombre_producto"].Value.ToString();
+                        Console.WriteLine($"Nombre del producto seleccionado: {nombreProductoSeleccionado}");
+                    }
+                    else if (indiceBotones == 2) // ID de Factura
+                    {
+                        nombreProductoSeleccionado = dgv.Rows[e.RowIndex].Cells["id_factura"].Value.ToString();
+                        Console.WriteLine($"ID de factura seleccionado: {nombreProductoSeleccionado}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Seleccione una celda válida", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        // Llenar dgvProductosAgregados
+        private void LlenarDGVProductosAgregados()
+        {
+            // Calcular el subtotal
+            float precioProducto = float.Parse(lblImpresionPrecioProducto.Text);
+            int cantidadProducto = Convert.ToInt32(txtUnidades.Text);
+            float subtotal = precioProducto * cantidadProducto;
+
+            // Crear una fila con los datos
+            string[] row = new string[]
+            {
+                nombreProducto,
+                precioProducto.ToString(),
+                unidades.ToString(),
+                subtotal.ToString(),
+                sucursal,
+                numeroFactura,
+                nombreCliente,
+                nombreEmpleado
+            };
+
+            listaSubtotales.Add(subtotal.ToString());
+            listaIDsClientes.Add(idCliente);
+            listaIDsEmpleados.Add(idEmpleado);
+            listaIDsProductos.Add(idProducto);
+            listaPrecios.Add(precioProducto.ToString());
+            listaUnidades.Add(cantidadProducto.ToString());
+
+            // Agregar la fila al DataGridView
+            dgvProductosAgregados.Rows.Add(row);
+        }
+
 
         /*
          * -------------------------------------------------------------------------
@@ -397,7 +630,7 @@ namespace negocioPapeleria
         {
             pnlVenta.Visible = true;
             pnlDatosVenta.Visible = true;
-            btnQuitarUltimoAgregado.Visible = true;
+            btnQuitarElemento.Visible = true;
             btnRegistrarVentaProductos.Visible = true;
             pnlFacturas.Visible = false;
         }
@@ -406,224 +639,109 @@ namespace negocioPapeleria
         {
             pnlVenta.Visible = false;
             pnlDatosVenta.Visible = false;
-            btnQuitarUltimoAgregado.Visible = false;
+            btnQuitarElemento.Visible = false;
             btnRegistrarVentaProductos.Visible = false;
             pnlFacturas.Visible = true;
 
 
         }
+       
+        private void CalcularTotal()
+        {
+            // Inicializa la suma total en 0
+            float sumaTotal = 0;
+
+            // Itera a través de todas las filas del DataGridView
+            foreach (DataGridViewRow fila in dgvProductosAgregados.Rows)
+            {
+                // Asegúrate de que la fila no sea nueva antes de intentar acceder a los datos
+                if (fila.IsNewRow) continue;
+
+
+                float subtotal = Convert.ToSingle(fila.Cells["Subtotal"].Value);
+                // Suma el valor del subtotal a la suma total
+                sumaTotal += subtotal;
+            }
+
+            // Muestra la suma total en el Label (formato con dos decimales)
+            lblRegistroTotal.Text = sumaTotal.ToString();
+        }
 
 
         private void btnAgregarProductos_Click(object sender, EventArgs e)
         {
-            //try
-            //{   
-            //    ObtenerDatosDelMenu(categoriaElegida);
-            //    cantidadProducto = int.Parse(txtCantidad.Text);
+            try
+            {
+                InicializarDatos();
+                LlenarDGVProductosAgregados();
 
-            //    listaNombresProductos.Add(nombreProducto);
-            //    listaTiposProductos.Add(tipoProducto);
-            //    listaCantidadProductos.Add(cantidadProducto);
+                lblRegistroTotal.Visible = true;
 
-            //    listaPrecios.Add(float.Parse(lblImpresionPrecioProducto.Text));
+                CalcularTotal();
 
-            //    if (cantidadProducto < 1)
-            //    {
-            //        throw new FormatException("La cantidad debe ser mayor o igual a 1");
-            //    }
 
-            //    if (categoriaElegida != 1 && categoriaElegida != 2)
-            //    {
-            //        lblRegistroProductos.Text += $"{nombreProducto}{Environment.NewLine}";
-            //    }
-
-            //    if (categoriaElegida == 1)
-            //    {
-            //        string nombreIngresoLabel = $"{tipoProducto} - {nombreProducto}{Environment.NewLine}";
-
-            //        if (rbtCaja.Checked)
-            //        {
-            //            nombreIngresoLabel = $"Caja de helados{Environment.NewLine}";
-            //        }
-            //        if (rbtChocoBanana.Checked)
-            //        {
-            //            nombreIngresoLabel = $"Choco banana{Environment.NewLine}";
-            //        }
-
-            //        lblRegistroProductos.Text += nombreIngresoLabel;
-            //    }
-
-            //    if (categoriaElegida == 2)
-            //    {
-            //        string nombreIngresoLabel = "";
-
-            //        if (rbtBlancoNegro.Checked)
-            //        {
-            //            nombreIngresoLabel = $"{tipoProducto} - B/N{Environment.NewLine}";
-            //        }
-            //        if (rbtColor.Checked)
-            //        {
-            //            nombreIngresoLabel = $"{tipoProducto} - Color{Environment.NewLine}";
-            //        }
-
-            //        lblRegistroProductos.Text += nombreIngresoLabel;
-            //    }
-
-            //    lblRegistroPrecios.Text += $"{lblImpresionPrecioProducto.Text}{Environment.NewLine}";
-            //    lblRegistroCantidad.Text += $"{txtCantidad.Text}{Environment.NewLine}";
-
-            //    float cantidadTemporal = float.Parse(txtCantidad.Text);
-            //    float precioTemporal = float.Parse(lblImpresionPrecioProducto.Text);
-            //    float subtotal = cantidadTemporal * precioTemporal;
-
-            //    string subtotalStr = subtotal.ToString("F2");
-
-            //    totalPrecio += subtotal;
-                
-            //    lblRegistroSubtotal.Text += $"{subtotalStr}{Environment.NewLine}";
-            //    lblRegistroTotal.Text = totalPrecio.ToString("F2");
-
-            //    lblTotal.Visible = true;
-            //    lblDolaresDelRegistro.Visible = true;
-            //    pnlPresentacionDatosRegistrados.Visible = true;
-
-            //    txtCantidad.Text = "";
-
-            //}
-            //catch (FormatException)
-            //{
-            //    MessageBox.Show("La cantidad debe ser un número entero mayor a 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("Error en el ingreso de datos del producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al agregar el producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void btnQuitarUltimoAgregado_Click(object sender, EventArgs e)
+        private void btnQuitarElemento_Click(object sender, EventArgs e)
         {
-            //if (listaNombresProductos.Count == 0)
-            //{
-            //    MessageBox.Show("No hay elementos para eliminar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
+            try
+            {
+                // Verifica si hay filas en el DataGridView
+                if (dgvProductosAgregados.Rows.Count > 0)
+                {
+                    // Itera a través de las filas del DataGridView
+                    foreach (DataGridViewRow fila in dgvProductosAgregados.Rows)
+                    {
+                        // Compara el valor de la columna 'nombre_producto' con el nombre proporcionado
+                        if (fila.Cells["nombre_producto"].Value != null &&
+                            fila.Cells["nombre_producto"].Value.ToString().Equals(nombreProductoSeleccionado, StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Elimina la fila del DataGridView
+                            dgvProductosAgregados.Rows.Remove(fila);
 
-            //if (listaNombresProductos.Count > 0)
-            //{
+                            CalcularTotal();
+                            MessageBox.Show("Producto eliminado correctamente.", "Eliminación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return; // Salir del bucle una vez que se elimina la fila
+                        }
+                    }
 
-            //    float precioEliminado = listaPrecios[listaPrecios.Count - 1];
-            //    int cantidadEliminada = listaCantidadProductos[listaCantidadProductos.Count - 1];
-
-            //    listaNombresProductos.RemoveAt(listaNombresProductos.Count - 1);
-            //    listaTiposProductos.RemoveAt(listaTiposProductos.Count - 1);
-            //    listaCantidadProductos.RemoveAt(listaCantidadProductos.Count - 1);
-            //    listaPrecios.RemoveAt(listaPrecios.Count - 1);
-
-            //    string textoProductos = "";
-            //    string textoPrecios = "";
-            //    string textoCantidad = "";
-            //    string textoSubtotal = "";
-
-            //    for (int i = 0; i < listaNombresProductos.Count; i++)
-            //    {
-            //        textoProductos += $"{listaNombresProductos[i]}{Environment.NewLine}";
-            //        textoPrecios += $"{listaPrecios[i]}{Environment.NewLine}";
-            //        textoCantidad += $"{listaCantidadProductos[i]}{Environment.NewLine}";
-
-            //        float subtotalActualizado = listaPrecios[i] * listaCantidadProductos[i];
-            //        textoSubtotal += $"{subtotalActualizado.ToString("F2")}{Environment.NewLine}";
-            //    }
-
-            //    lblRegistroProductos.Text = textoProductos;
-            //    lblRegistroPrecios.Text = textoPrecios;
-            //    lblRegistroCantidad.Text = textoCantidad;
-            //    lblRegistroSubtotal.Text = textoSubtotal;
-
-            //    float nuevoTotal = totalPrecio - (precioEliminado * cantidadEliminada);
-            //    totalPrecio = nuevoTotal;
-
-            //    lblRegistroTotal.Text = totalPrecio.ToString("F2");
-
-            //    MessageBox.Show("Elemento eliminado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //} 
-
+                    // Si no se encontró el producto
+                    MessageBox.Show("Producto no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("No hay productos para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al eliminar el producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRegistrarVentaProductos_Click(object sender, EventArgs e)
         {
 
-            //try
-            //{
-            //    string crearVenta = "INSERT INTO ventas(fecha_venta) VALUES(CURRENT_DATE)";
-            //    string agregarProductosDetalleVenta = "";
+            string fechaHoy = DateTime.Now.ToString("yyyy-MM-dd");
 
-            //    //Crear venta
-            //    using (NpgsqlCommand command = new NpgsqlCommand(crearVenta, conn.GetConnection()))
-            //    {
-            //        command.ExecuteNonQuery();
-            //    }
+            //Meter en for
+            string insertarElementos = "SET XACT_ABORT ON; " +
+                "BEGIN DISTRIBUTED TRANSACTION " +
+                $"insert into Facturas(num_factura, fecha_fact, precio_fact, id_sucursal,id_cliente, id_empleado) " +
+                $"Values({numeroFactura},'{fechaHoy}', {listaSubtotales}, {idSucursal}, {idCliente}, {idEmpleado}); " +
+                $"insert into Detalles(linea_det, unidades, precio_det, num_factura, id_producto, id_sucursal) " +
+                $"Values({lineaDetalles}, {unidades}, {listaPrecios},{numeroFactura}, {idProducto}, {idSucursal}); " +
+                "COMMIT TRANSACTION";
 
-            //    //Obtener ID de la venta creada
-            //    ConsultarIdVenta();
-            //    Console.WriteLine("ID venta: " + idVentaSeleccionada);
-
-            //    //Agregar productos a la venta
-            //    for (int i = 0; i < listaNombresProductos.Count; i++)
-            //    {
-            //        ConsultarIdTipo(listaTiposProductos[i]);
-            //        nombreProducto = listaNombresProductos[i];
-
-            //        ConsultarIdProducto();
-
-            //        cantidadProducto = listaCantidadProductos[i];
-
-            //        Console.WriteLine(agregarProductosDetalleVenta);
-
-
-            //        agregarProductosDetalleVenta = $"INSERT INTO detalle_ventas(id_venta, id_producto, cantidad) " +
-            //        $"VALUES ({idVentaSeleccionada}, {idProducto}, {cantidadProducto})";
-
-            //        using (NpgsqlCommand command = new NpgsqlCommand(agregarProductosDetalleVenta, conn.GetConnection()))
-            //        {
-            //            command.ExecuteNonQuery();
-            //            ventaCreadaCorrectamente = true;
-
-            //        }
-                    
-            //    }
-
-            //    if (ventaCreadaCorrectamente == true)
-            //    {
-            //        MessageBox.Show("La venta se guardó correctamente");
-            //    }
-
-            //    listaNombresProductos.Clear();
-            //    listaTiposProductos.Clear();
-            //    listaPrecios.Clear();
-            //    listaCantidadProductos.Clear();
-
-            //    lblRegistroCantidad.Text = "";
-            //    lblRegistroPrecios.Text = "";
-            //    lblRegistroProductos.Text = "";
-            //    lblRegistroSubtotal.Text = "";
-            //    lblRegistroTotal.Text = "";
-
-            //    lblTotal.Visible = false;
-            //    lblDolaresDelRegistro.Visible = false;
-            //    pnlPresentacionDatosRegistrados.Visible = false;
-
-            //    totalPrecio = 0;
-
-
-            //    LlenarDgvMostrarDatos();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Error al registrar la venta " + ex, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            MessageBox.Show(insertarElementos);
 
         }
 
+        
     }
 }
